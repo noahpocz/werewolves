@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Container, Header, Button, Icon, Segment } from 'semantic-ui-react';
-
-import MainHeader from './MainHeader';
 
 class LandingPage extends Component {
 	render() {
@@ -28,7 +27,7 @@ class LandingPage extends Component {
 							fontWeight: 'normal',
 							marginTop: '1.5em',
 						}} />
-					<Button primary size='huge'>
+					<Button as={Link} to='/gameSetup' primary size='huge'>
 						Start Game
 						<Icon name='right arrow' />
 					</Button>
