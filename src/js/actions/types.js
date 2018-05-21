@@ -1,0 +1,3 @@
+/* ACTION TYPES */
+export const INITIALIZE = 'INITIALIZE';
+

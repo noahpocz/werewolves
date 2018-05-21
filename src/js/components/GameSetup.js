@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Segment, Label, Icon, Dropdown, Header, Divider, Button, Sidebar, Menu } from 'semantic-ui-react';
 
 import { players1 } from './mockdata';
+import * as actions from '../actions/players';
 
 const styles = {
 	mainContent: {
@@ -16,10 +18,17 @@ const styles = {
 };
 
 class GameSetup extends Component {
+
+	componentDidMount() {
+		this.props.initializePlayers();
+	}
+
 	render() {
+		let { players } = this.props;
+		players = players || [];
 		const icon = <Icon name='ellipsis vertical' size='large' />;
 		const renderPlayers = () => {
-			return players1.map((player, i) => {
+			return players.map((player, i) => {
 				console.log('player: ', player);
 				return (
 					<Segment key={i} >
@@ -84,4 +93,8 @@ class GameSetup extends Component {
 	}
 }
 
-export default GameSetup;
+const mapStateToProps = (state) => ({
+	players: state.players.players
+});
+
+export default connect(mapStateToProps, actions)(GameSetup);
