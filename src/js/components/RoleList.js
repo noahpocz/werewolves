@@ -24,10 +24,9 @@ class RoleList extends Component {
 		players = players || [];
 		const renderRoles = () => {
 			return roles.map((role, i) => {
-				console.log('role: ', role);
 				return (
 					<Card key={i} >
-						<Image src='https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg' />
+						<Image src={role.image} />
 						<Card.Content>
 							<Card.Header>
 								{role.name}

@@ -25,21 +25,25 @@ export const roles = [
 	{
 		name: 'Werewolf',
 		team: 'Werewolves',
-		description: 'Werewolves like to eat things.'
+		description: 'Werewolves like to eat things.',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 	{
 		name: 'Villager',
 		team: 'Villagers',
-		description: 'Villagers are uselses.'
+		description: 'Villagers are uselses.',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 	{
 		name: 'Defender',
 		team: 'Villagers',
-		description: 'Defenders defend other people.'
+		description: 'Defenders defend other people.',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 	{
 		name: 'Fortune Teller',
 		team: 'Villagers',
-		description: 'Fortune Tellers like to tell fortunes.'
+		description: 'Fortune Tellers like to tell fortunes.',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 ];
