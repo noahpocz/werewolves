@@ -66,7 +66,7 @@ class RoleList extends Component {
 					<Button>Randomize</Button>
 					<Divider />
 				</div>
-				<Card.Group>
+				<Card.Group itemsPerRow={3} stackable >
 					{renderRoles()}
 				</Card.Group>
 			</div>
