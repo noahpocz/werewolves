@@ -18,14 +18,25 @@ const styles = {
 };
 
 class RoleList extends Component {
+
+	_assignRole(roleName, players) {
+		const { updatePlayers, history } = this.props;
+		const { index } = this.props.match.params;
+		const updatedPlayers = [...players];
+		updatedPlayers[index].role = roleName;
+		updatePlayers(updatedPlayers);
+		history.push('/gameSetup');
+	}
+
 	render() {
 		let { players } = this.props;
 		const { index } = this.props.match.params;
 		players = players || [];
 		const renderRoles = () => {
 			return roles.map((role, i) => {
+				const cardColor = role.name === players[index].role ? 'blue' : '';
 				return (
-					<Card key={i} >
+					<Card key={i} color={cardColor} >
 						<Image src={role.image} />
 						<Card.Content>
 							<Card.Header>
@@ -39,7 +50,7 @@ class RoleList extends Component {
 							</Card.Description>
 						</Card.Content>
 						<Card.Content extra>
-							<Button fluid primary basic >Assign</Button>
+							<Button fluid primary basic onClick={() => this._assignRole(role.name, players)} >Assign</Button>
 						</Card.Content>
 					</Card>
 				);
@@ -50,7 +61,7 @@ class RoleList extends Component {
 				<div>
 					<Header as='h1' >
 						Assign Role
-						<Header.Subheader>{players.length > 0 ? players[index].name : ''}</Header.Subheader>
+						<Header.Subheader>{players.length > 0 ? `${players[index].name} // ${players[index].role}` : ''}</Header.Subheader>
 					</Header>
 					<Button>Randomize</Button>
 					<Divider />

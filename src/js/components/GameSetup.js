@@ -29,10 +29,6 @@ class GameSetup extends Component {
 		this._toggleSidebar = this._toggleSidebar.bind(this);
 	}
 
-	componentDidMount() {
-		this.props.initializePlayers();
-	}
-
 	_moveUp(index, players) {
 		const { updatePlayers } = this.props;
 		let temp = '';

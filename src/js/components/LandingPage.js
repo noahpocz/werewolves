@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Header, Button, Icon, Segment } from 'semantic-ui-react';
 
+import * as actions from '../actions/players';
+
 class LandingPage extends Component {
+
+	componentDidMount() {
+		this.props.initializePlayers();
+	}
+
 	render() {
 		return (
 			<Segment inverted textAlign='center' vertical
@@ -37,4 +45,8 @@ class LandingPage extends Component {
 	}
 }
 
-export default LandingPage;
+const mapStateToProps = (state) => ({
+	players: state.players.players
+});
+
+export default connect(mapStateToProps, actions)(LandingPage);

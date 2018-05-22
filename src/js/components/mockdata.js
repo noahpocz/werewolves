@@ -31,7 +31,7 @@ export const roles = [
 	{
 		name: 'Villager',
 		team: 'Villagers',
-		description: 'Villagers are uselses.',
+		description: 'Villagers are useless.',
 		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 	{
