@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Segment, Label, Icon, Dropdown, Header, Divider, Button, Sidebar, Menu } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Segment, Label, Icon, Dropdown, Header, Divider, Button, Sidebar, Grid, Card } from 'semantic-ui-react';
 
 import { players1 } from './mockdata';
 import * as actions from '../actions/players';
@@ -21,8 +22,11 @@ class GameSetup extends Component {
 	constructor(props) {
 		super(props);
 
+		this.state = { sidebar: false };
+
 		this._moveUp = this._moveUp.bind(this);
 		this._moveDown = this._moveDown.bind(this);
+		this._toggleSidebar = this._toggleSidebar.bind(this);
 	}
 
 	componentDidMount() {
@@ -49,8 +53,13 @@ class GameSetup extends Component {
 		updatePlayers(updatedPlayers);
 	}
 
+	_toggleSidebar() {
+		this.setState({ sidebar: !this.state.sidebar });
+	}
+
 	render() {
 		let { players } = this.props;
+		const { sidebar } = this.state;
 		players = players || [];
 		const icon = <Icon name='ellipsis vertical' size='large' />;
 		const renderPlayers = () => {
@@ -70,7 +79,7 @@ class GameSetup extends Component {
 								</Label>
 								<Dropdown icon={icon} >
 									<Dropdown.Menu>
-										<Dropdown.Item>Assign Role</Dropdown.Item>
+										<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
 										<Divider />
 										{moveUp}
 										{moveDown}
@@ -83,42 +92,17 @@ class GameSetup extends Component {
 			});
 		};
 		return (
-			<Sidebar.Pushable style={{ height: window.innerHeight }} >
-				<div style={styles.mainContent} >
-					<Sidebar
-						as={Menu}
-						animation='push'
-						width='thin'
-						direction='bottom'
-						visible={false}
-						icon='labeled'
-						vertical >
-						<Menu.Item name='home'>
-							<Icon name='home' />
-							Home
-						</Menu.Item>
-						<Menu.Item name='gamepad'>
-							<Icon name='gamepad' />
-							Games
-						</Menu.Item>
-						<Menu.Item name='camera'>
-							<Icon name='camera' />
-							Channels
-						</Menu.Item>
-					</Sidebar>
-					<Sidebar.Pusher>
-						<div>
-							<Header as='h1' >
+			<div style={styles.mainContent} >
+				<div>
+					<Header as='h1' >
 							Select Roles
-							</Header>
-							<Button primary >Confirm</Button>
-							<Button>Randomize</Button>
-							<Divider />
-						</div>
-						{renderPlayers()}
-					</Sidebar.Pusher>
+					</Header>
+					<Button primary >Confirm</Button>
+					<Button>Randomize</Button>
+					<Divider />
 				</div>
-			</Sidebar.Pushable>
+				{renderPlayers()}
+			</div>
 		);
 	}
 }

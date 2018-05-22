@@ -20,3 +20,26 @@ export const players1 = [
 		role: 'Defender'
 	},
 ];
+
+export const roles = [
+	{
+		name: 'Werewolf',
+		team: 'Werewolves',
+		description: 'Werewolves like to eat things.'
+	},
+	{
+		name: 'Villager',
+		team: 'Villagers',
+		description: 'Villagers are uselses.'
+	},
+	{
+		name: 'Defender',
+		team: 'Villagers',
+		description: 'Defenders defend other people.'
+	},
+	{
+		name: 'Fortune Teller',
+		team: 'Villagers',
+		description: 'Fortune Tellers like to tell fortunes.'
+	},
+];
