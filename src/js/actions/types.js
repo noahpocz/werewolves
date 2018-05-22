@@ -1,3 +1,2 @@
 /* ACTION TYPES */
-export const INITIALIZE = 'INITIALIZE';
-
+export const UPDATE_PLAYERS = 'UPDATE_PLAYERS';

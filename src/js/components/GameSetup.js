@@ -18,9 +18,35 @@ const styles = {
 };
 
 class GameSetup extends Component {
+	constructor(props) {
+		super(props);
+
+		this._moveUp = this._moveUp.bind(this);
+		this._moveDown = this._moveDown.bind(this);
+	}
 
 	componentDidMount() {
 		this.props.initializePlayers();
+	}
+
+	_moveUp(index, players) {
+		const { updatePlayers } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index - 1];
+		updatedPlayers[index - 1] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
+	_moveDown(index, players) {
+		const { updatePlayers } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index + 1];
+		updatedPlayers[index + 1] = temp;
+		updatePlayers(updatedPlayers);
 	}
 
 	render() {
@@ -28,8 +54,12 @@ class GameSetup extends Component {
 		players = players || [];
 		const icon = <Icon name='ellipsis vertical' size='large' />;
 		const renderPlayers = () => {
-			return players.map((player, i) => {
-				console.log('player: ', player);
+			return players.map((player, i, players) => {
+				console.log('i: ', i);
+				const moveUp = i !== 0 ?
+					<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
+				const moveDown = i !== players.length - 1 ?
+					<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
 				return (
 					<Segment key={i} >
 						<div style={styles.flexBox} >
@@ -42,8 +72,8 @@ class GameSetup extends Component {
 									<Dropdown.Menu>
 										<Dropdown.Item>Assign Role</Dropdown.Item>
 										<Divider />
-										<Dropdown.Item>Move Up</Dropdown.Item>
-										<Dropdown.Item>Move Down</Dropdown.Item>
+										{moveUp}
+										{moveDown}
 									</Dropdown.Menu>
 								</Dropdown>
 							</div>
@@ -60,7 +90,7 @@ class GameSetup extends Component {
 						animation='push'
 						width='thin'
 						direction='bottom'
-						visible={true}
+						visible={false}
 						icon='labeled'
 						vertical >
 						<Menu.Item name='home'>
