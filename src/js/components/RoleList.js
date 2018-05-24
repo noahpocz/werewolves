@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Header, Divider, Button, Card, Image } from 'semantic-ui-react';
 
 import { roles } from './mockdata';
 import * as actions from '../actions/players';
+import MainHeader from './MainHeader';
 
 const styles = {
 	mainContent: {
@@ -19,11 +21,11 @@ const styles = {
 
 class RoleList extends Component {
 
-	_assignRole(roleName, players) {
+	_assignRole(role, players) {
 		const { updatePlayers, history } = this.props;
 		const { index } = this.props.match.params;
 		const updatedPlayers = [...players];
-		updatedPlayers[index].role = roleName;
+		updatedPlayers[index].role = role;
 		updatePlayers(updatedPlayers);
 		history.push('/gameSetup');
 	}
@@ -32,6 +34,7 @@ class RoleList extends Component {
 		let { players } = this.props;
 		const { index } = this.props.match.params;
 		players = players || [];
+		const currentRole = players[index].role ? players[index].role.name : 'Unassigned';
 		const renderRoles = () => {
 			return roles.map((role, i) => {
 				const cardColor = role.name === players[index].role ? 'blue' : '';
@@ -50,25 +53,31 @@ class RoleList extends Component {
 							</Card.Description>
 						</Card.Content>
 						<Card.Content extra>
-							<Button fluid primary basic onClick={() => this._assignRole(role.name, players)} >Assign</Button>
+							<Button fluid primary basic onClick={() => this._assignRole(role, players)} >Assign</Button>
 						</Card.Content>
 					</Card>
 				);
 			});
 		};
 		return (
-			<div style={styles.mainContent} >
-				<div>
-					<Header as='h1' >
+			<div>
+				<MainHeader />
+				<div style={styles.mainContent} >
+					<div>
+						<Header as='h1' >
 						Assign Role
-						<Header.Subheader>{players.length > 0 ? `${players[index].name} // ${players[index].role}` : ''}</Header.Subheader>
-					</Header>
-					<Button>Randomize</Button>
-					<Divider />
+							<Header.Subheader>
+								<b>{players.length > 0 ? `${players[index].name}: ${currentRole}` : ''}</b>
+							</Header.Subheader>
+						</Header>
+						<Button primary >Randomize</Button>
+						<Button as={Link} to='/gameSetup' >Cancel</Button>
+						<Divider />
+					</div>
+					<Card.Group itemsPerRow={4} stackable >
+						{renderRoles()}
+					</Card.Group>
 				</div>
-				<Card.Group itemsPerRow={3} stackable >
-					{renderRoles()}
-				</Card.Group>
 			</div>
 		);
 	}

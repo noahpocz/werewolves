@@ -6,7 +6,7 @@ class MainHeader extends Component {
 	render() {
 		return (
 			<div>
-				<Menu inverted style={{ borderRadius: '0px', height: '60px', paddingLeft: '12px', paddingRight: '12px' }} >
+				<Menu style={{ borderRadius: '0px', height: '60px', paddingLeft: '12px', paddingRight: '12px' }} >
 					<Container>
 						<Menu.Item as={Link} to='/' header>Home</Menu.Item>
 						{this.props.children}

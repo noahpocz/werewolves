@@ -15,7 +15,7 @@ class LandingPage extends Component {
 		return (
 			<Segment inverted textAlign='center' vertical
 				style={{ height: window.innerHeight, padding: '1em 0em' }} >
-				<Container text>
+				<Container text style={{ height: '100%' }} >
 					<Header
 						as='h1'
 						content='Werewolves'
