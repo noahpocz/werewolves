@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Container, Header, Button, Icon, Segment } from 'semantic-ui-react';
 
-import MainHeader from './MainHeader';
+import * as actions from '../actions/players';
 
 class LandingPage extends Component {
+
+	componentDidMount() {
+		this.props.initializePlayers();
+	}
+
 	render() {
 		return (
 			<Segment inverted textAlign='center' vertical
 				style={{ height: window.innerHeight, padding: '1em 0em' }} >
-				<Container text>
+				<Container text style={{ height: '100%' }} >
 					<Header
 						as='h1'
 						content='Werewolves'
@@ -28,7 +35,7 @@ class LandingPage extends Component {
 							fontWeight: 'normal',
 							marginTop: '1.5em',
 						}} />
-					<Button primary size='huge'>
+					<Button as={Link} to='/gameSetup' primary size='huge'>
 						Start Game
 						<Icon name='right arrow' />
 					</Button>
@@ -38,4 +45,8 @@ class LandingPage extends Component {
 	}
 }
 
-export default LandingPage;
+const mapStateToProps = (state) => ({
+	players: state.players.players
+});
+
+export default connect(mapStateToProps, actions)(LandingPage);
