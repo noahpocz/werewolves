@@ -67,9 +67,21 @@ export const roles = [
 		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 	{
+		name: 'Witch',
+		team: 'Villager',
+		description: 'The witch has two spooky potions.',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
+	},
+	{
+		name: 'Elder',
+		team: 'Villager',
+		description: 'The elder has fallen and can\'t get up',
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
+	},
+	{
 		name: 'Piper',
 		team: 'Other',
-		description: 'The Piper charms people',
+		description: 'The Piper charms people.',
 		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
 ];
