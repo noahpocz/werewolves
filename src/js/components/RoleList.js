@@ -37,7 +37,10 @@ class RoleList extends Component {
 		const currentRole = players[index].role ? players[index].role.name : 'Unassigned';
 		const renderRoles = () => {
 			return roles.map((role, i) => {
-				const cardColor = role.name === players[index].role.name ? 'blue' : '';
+				let cardColor = '';
+				if (players[index].role) {
+					cardColor = role.name === players[index].role.name ? 'blue' : '';
+				}
 				return (
 					<Card key={i} color={cardColor} >
 						<Image src={role.image} />
