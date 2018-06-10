@@ -128,7 +128,9 @@ class GameSetup extends Component {
 						<Button as={Link} to={'/addPlayer'} >
 							Add Player
 						</Button>
-						<Button>Randomize</Button>
+						<Button>
+							Randomize
+						</Button>
 						<Divider />
 					</div>
 					{renderPlayers()}
