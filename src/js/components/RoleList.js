@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Header, Divider, Button, Card, Image, Label, Icon } from 'semantic-ui-react';
+import { Header, Divider, Button, Card, Image, Label, Search } from 'semantic-ui-react';
 
 import { roles } from './mockdata';
 import * as actions from '../actions/players';
@@ -20,6 +20,11 @@ const styles = {
 };
 
 class RoleList extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = { search: '' };
+	}
 
 	_assignRole(role, players) {
 		const { updatePlayers, history } = this.props;
@@ -30,9 +35,15 @@ class RoleList extends Component {
 		history.push('/gameSetup');
 	}
 
+	_onSearchChange(e) {
+		this.setState({ search: e.target.value });
+	}
+
 	render() {
 		let { players } = this.props;
+		const { search } = this.state;
 		const { index } = this.props.match.params;
+		console.log('this.state.search: ', this.state.search);
 		players = players || [];
 		const currentRole = players[index].role ? players[index].role.name : 'Unassigned';
 		roles.forEach(role => {
@@ -45,8 +56,11 @@ class RoleList extends Component {
 				}
 			});
 		});
+		const filteredRoles = roles.filter(role => {
+			return role.name.toLowerCase().includes(search.toLowerCase());
+		});
 		const renderRoles = () => {
-			return roles.map((role, i) => {
+			return filteredRoles.map((role, i) => {
 				let cardColor = '';
 				let labelColor = '';
 				switch (role.team) {
@@ -102,6 +116,7 @@ class RoleList extends Component {
 								<b>{players.length > 0 ? `${players[index].name}: ${currentRole}` : ''}</b>
 							</Header.Subheader>
 						</Header>
+						<Search onSearchChange={(e) => this._onSearchChange(e)} showNoResults={false} />
 						<Button primary >Randomize</Button>
 						<Button as={Link} to='/gameSetup' >Cancel</Button>
 						<Divider />

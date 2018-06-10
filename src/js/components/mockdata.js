@@ -6,7 +6,8 @@ export const players1 = [
 			team: 'Werewolves',
 			description: 'Werewolves like to eat things.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
-		}
+		},
+		alive: true
 	},
 	{
 		name: 'Conrad',
@@ -19,7 +20,8 @@ export const players1 = [
 			team: 'Villagers',
 			description: 'Defenders defend other people.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
-		}
+		},
+		alive: true
 	},
 	{
 		name: 'Riley',
@@ -28,7 +30,8 @@ export const players1 = [
 			team: 'Villagers',
 			description: 'Fortune Tellers like to tell fortunes.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
-		}
+		},
+		alive: true
 	},
 	{
 		name: 'Ryan',
@@ -37,7 +40,8 @@ export const players1 = [
 			team: 'Villagers',
 			description: 'Villagers are useless.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
-		}
+		},
+		alive: true
 	},
 ];
 
@@ -135,5 +139,6 @@ export const roles = [
 ];
 
 export const metadata = {
+	sheriff: null,
 
 };
