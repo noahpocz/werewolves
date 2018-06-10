@@ -16,6 +16,7 @@ import GameSetup from './js/components/GameSetup';
 import AddPlayer from './js/components/AddPlayer';
 import RoleList from './js/components/RoleList';
 import GamePlay from './js/components/GamePlay';
+import Graveyard from './js/components/Graveyard';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistedState = loadState();
@@ -38,6 +39,7 @@ ReactDOM.render(
 				<Route path='/roleList/:index' component={RoleList} />
 				<Route path='/morning' component={GamePlay} />
 				<Route path='/night' component={GamePlay} />
+				<Route path='/graveyard' component={Graveyard} />
 			</App>
 		</HashRouter>
 	</Provider>
