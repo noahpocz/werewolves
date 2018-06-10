@@ -1,31 +1,46 @@
 import React, { Component } from 'react';
 
+const defaultAttributes = {
+	direction: 'column',
+	justify: 'start',
+	align: 'center',
+	wrap: true
+};
+
+const mapping = {
+	start: 'flex-start',
+	end: 'flex-end',
+	between: 'space-between',
+};
+
+const map = (input) => {
+	if (input in mapping) {
+		return mapping[input];
+	}
+	return input;
+};
+
 class FlexBox extends Component {
+	render() {
+		let { direction, justify, align, wrap } = this.props;
+		/* Sets defaults if prop is undefined */
+		direction = map(direction) || defaultAttributes.direction;
+		justify = map(justify) || defaultAttributes.justify;
+		align = map(align) || defaultAttributes.align;
+		wrap = wrap !== undefined ? wrap : defaultAttributes.wrap;
 
-    render() {
-
-        const defaultAttributes = {
-            flexDirection: 'column',
-            justifyContent: 'start'
-        }
-
-        const { direction, justify } = this.props;
-        const finalStyling = Object.assign({display: 'flex'}, this.props.style);
-
-        if (direction) {
-            finalStyling['flexDirection'] = direction;
-        }
-
-        if (justify) {
-            finalStyling['justifyContent'] = justify
-        }
-
-        return (
-            <div style={finalStyling}>
-                {this.props.children}
-            </div>
-        );
-    }
+		/* Merges props with style object */
+		const finalStyling = Object.assign({ display: 'flex' }, this.props.style);
+		finalStyling.flexDirection = direction;
+		finalStyling.justifyContent = justify;
+		finalStyling.alignItems = align;
+		finalStyling.flexWrap = wrap ? 'wrap' : 'nowrap';
+		return (
+			<div style={finalStyling}>
+				{this.props.children}
+			</div>
+		);
+	}
 }
 
- export default FlexBox;
+export default FlexBox;
