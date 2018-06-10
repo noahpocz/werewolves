@@ -5,6 +5,7 @@ import { Header, Divider, Button, Card, Image, Label, Search } from 'semantic-ui
 
 import { roles } from './mockdata';
 import * as actions from '../actions/players';
+import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
 
 const styles = {
@@ -116,9 +117,13 @@ class RoleList extends Component {
 								<b>{players.length > 0 ? `${players[index].name}: ${currentRole}` : ''}</b>
 							</Header.Subheader>
 						</Header>
-						<Search onSearchChange={(e) => this._onSearchChange(e)} showNoResults={false} />
-						<Button primary >Randomize</Button>
-						<Button as={Link} to='/gameSetup' >Cancel</Button>
+						<FlexBox direction='row' justify='between' >
+							<FlexBox direction='row' >
+								<Button primary >Randomize</Button>
+								<Button as={Link} to='/gameSetup' >Cancel</Button>
+							</FlexBox>
+							<Search onSearchChange={(e) => this._onSearchChange(e)} showNoResults={false} />
+						</FlexBox>
 						<Divider />
 					</div>
 					<Card.Group itemsPerRow={4} stackable >
