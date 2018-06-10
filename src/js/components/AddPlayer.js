@@ -57,17 +57,23 @@ class AddPlayer extends Component {
 				<div style={styles.mainContent}>
 					<FlexBox direction='row' justify='center'>
 						<FlexBox direction='column' style={{ width: '270px' }}>
-							<Header as='h1' >
-                                Add Player
-							</Header>
+							<FlexBox direction='row' justify='start' style={{ width: '100%' }}>
+								<Header as='h1' > Add Player </Header>
+							</FlexBox>
+							<br />
 							<Input
+								style={{ width: '100%' }}
 								placeholder='Name'
 								value={this.state.name}
 								onChange={(event) => { this.setState({ name: event.target.value }); }} />
 							<br />
-							<Input placeholder='Email' value={this.state.email} onChange={(event) => { this.setState({ email: event.target.value }); }} />
+							<Input
+								style={{ width: '100%' }}
+								placeholder='Email'
+								value={this.state.email}
+								onChange={(event) => { this.setState({ email: event.target.value }); }} />
 							<br />
-							<FlexBox direction='row' justify='flex-end'>
+							<FlexBox style={{ width: '100%' }} direction='row' justify='flex-end'>
 								<Button primary onClick={this._submit}> Submit </Button>
 								<Button as={Link} to={'/gameSetup'} style={{ margin: 0 }} > Cancel </Button>
 							</FlexBox>
