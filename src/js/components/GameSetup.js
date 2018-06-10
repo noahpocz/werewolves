@@ -125,6 +125,9 @@ class GameSetup extends Component {
 							Select Roles
 						</Header>
 						<Button primary >Confirm</Button>
+						<Button as={Link} to={'/addPlayer'} >
+							Add Player
+						</Button>
 						<Button>Randomize</Button>
 						<Divider />
 					</div>
