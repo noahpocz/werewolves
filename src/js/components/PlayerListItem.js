@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
+class PlayerListItem extends Component {
+
+	render() {
+		return (
+			<div></div>
+=======
 import { connect } from 'react-redux';
 import { Label, Icon, Segment, Dropdown } from 'semantic-ui-react';
 
@@ -58,12 +65,17 @@ class PlayerListItem extends Component {
 					</FlexBox>
 				</FlexBox>
 			</Segment>
+>>>>>>> 63ac8c44175116e8ef3a4f8841b6ecadeb95eabe
 		);
 	}
 }
 
+<<<<<<< HEAD
+export default PlayerListItem;
+=======
 const mapStateToProps = (state) => ({
 	players: state.players.players
 });
 
 export default connect(mapStateToProps, actions)(PlayerListItem);
+>>>>>>> 63ac8c44175116e8ef3a4f8841b6ecadeb95eabe
