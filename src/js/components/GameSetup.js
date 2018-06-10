@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Segment, Label, Icon, Dropdown, Header, Divider, Button } from 'semantic-ui-react';
+import { Dropdown, Header, Divider, Button } from 'semantic-ui-react';
 
 import * as actions from '../actions/players';
+import PlayerListItem from './PlayerListItem';
 import MainHeader from './MainHeader';
 
 const styles = {
@@ -24,8 +25,6 @@ class GameSetup extends Component {
 
 		this._moveUp = this._moveUp.bind(this);
 		this._moveDown = this._moveDown.bind(this);
-		this._toggleSidebar = this._toggleSidebar.bind(this);
-		this._unassignRole = this._unassignRole.bind(this);
 	}
 
 	_moveUp(index, players) {
@@ -48,71 +47,24 @@ class GameSetup extends Component {
 		updatePlayers(updatedPlayers);
 	}
 
-	_unassignRole(index, players) {
-		const { updatePlayers } = this.props;
-		const updatedPlayers = [...players];
-		updatedPlayers[index].role = null;
-		updatePlayers(updatedPlayers);
-	}
-
-	_toggleSidebar() {
-		this.setState({ sidebar: !this.state.sidebar });
-	}
-
 	render() {
 		let { players } = this.props;
 		players = players || [];
-		const icon = <Icon name='ellipsis vertical' size='large' />;
+
 		const renderPlayers = () => {
 			return players.map((player, i, players) => {
-				let labelColor = '';
-				if (player.role) {
-					switch (player.role.team) {
-						case 'Werewolves':
-							labelColor = 'red';
-							break;
-						case 'Villagers':
-							labelColor = 'brown';
-							break;
-						case 'Other':
-							labelColor = 'purple';
-							break;
-						default:
-							labelColor = '';
-							break;
-					}
-				}
-				const label = player.role ?
-					<Label style={{ marginRight: '12px' }} color={labelColor} image >
-						{<img src={player.role.image} alt='Player' />}
-						{player.role.name}
-						{<Icon onClick={() => this._unassignRole(i, players) } name='delete' />}
-					</Label>
-					:
-					<Label style={{ marginRight: '12px' }} >
-						Unassigned
-					</Label>;
 				const moveUp = i !== 0 ?
 					<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
 				const moveDown = i !== players.length - 1 ?
 					<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
+				const menuItems = [
+					<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>,
+					<Divider />,
+					moveUp,
+					moveDown
+				];
 				return (
-					<Segment key={i} >
-						<div style={styles.flexBox} >
-							{player.name}
-							<div style={styles.flexBox} >
-								{label}
-								<Dropdown icon={icon} >
-									<Dropdown.Menu>
-										<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
-										<Divider />
-										{moveUp}
-										{moveDown}
-									</Dropdown.Menu>
-								</Dropdown>
-							</div>
-						</div>
-					</Segment>
+					<PlayerListItem player={player} index={i} menuItems={menuItems} key={i} />
 				);
 			});
 		};

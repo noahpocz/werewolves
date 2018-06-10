@@ -7,8 +7,7 @@ class PlayerListItem extends Component {
 			<div></div>
 =======
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Label, Icon, Segment, Dropdown, Divider } from 'semantic-ui-react';
+import { Label, Icon, Segment, Dropdown } from 'semantic-ui-react';
 
 import * as actions from '../actions/players';
 import FlexBox from './custom/FlexBox';
@@ -23,7 +22,7 @@ class PlayerListItem extends Component {
 	}
 
 	render() {
-		const { player, players, index } = this.props;
+		const { player, index, menuItems } = this.props;
 		const icon = <Icon name='ellipsis vertical' size='large' />;
 		let labelColor = '';
 		if (player.role) {
@@ -50,24 +49,17 @@ class PlayerListItem extends Component {
 			</Label>
 			:
 			<Label style={{ marginRight: '12px' }} >
-						Unassigned
+				Unassigned
 			</Label>;
-		const moveUp = index !== 0 ?
-			<Dropdown.Item onClick={() => this._moveUp(index)} >Move Up</Dropdown.Item> : '';
-		const moveDown = index !== players.length - 1 ?
-			<Dropdown.Item onClick={() => this._moveDown(index)} >Move Down</Dropdown.Item> : '';
 		return (
 			<Segment>
-				<FlexBox align='center' justify='between' >
+				<FlexBox direction='row' align='center' justify='between' >
 					{player.name}
-					<FlexBox align='center' justify='between' >
+					<FlexBox direction='row' align='center' justify='between' >
 						{label}
 						<Dropdown icon={icon} >
 							<Dropdown.Menu>
-								<Dropdown.Item as={Link} to={`/roleList/${index}`} >Assign Role</Dropdown.Item>
-								<Divider />
-								{moveUp}
-								{moveDown}
+								{menuItems}
 							</Dropdown.Menu>
 						</Dropdown>
 					</FlexBox>
