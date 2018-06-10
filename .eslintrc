@@ -74,10 +74,6 @@
 					 {"multiline" : true}
 			],
 			"array-bracket-spacing": 2,
-			"array-element-newline": [
-					 "error",
-					 {"multiline": true}
-			 ],
 			 "block-spacing": [
 					 "error",
 					 "always"
