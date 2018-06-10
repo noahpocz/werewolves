@@ -78,7 +78,7 @@ class RoleList extends Component {
 						break;
 				}
 				const teamLabel =
-					<Label style={{ marginRight: '12px' }} color={labelColor} >
+					<Label style={{ marginTop: '6px' }} color={labelColor} >
 						{role.team}
 					</Label>;
 				if (players[index].role) {
