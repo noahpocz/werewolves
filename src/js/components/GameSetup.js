@@ -76,7 +76,7 @@ class GameSetup extends Component {
 						<Header as='h1' >
 							Select Roles
 						</Header>
-						<Button primary as={Link} to='/graveyard' >Confirm</Button>
+						<Button primary as={Link} to='/gameplay' >Confirm</Button>
 						<Button as={Link} to={'/addPlayer'} >
 							Add Player
 						</Button>
