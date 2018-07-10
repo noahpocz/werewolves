@@ -87,7 +87,7 @@ class RoleList extends Component {
 				}
 				return (
 					<Card key={i} color={cardColor} >
-						<Image src={role.image} label={<Label corner='right' >{role.count}/1</Label>} />
+						<Image src={role.image} label={<Label style={{ padding: '6px', textAlign: 'right' }} corner='right' >{role.count}/1</Label>} />
 						<Card.Content>
 							<Card.Header>
 								{role.name}
