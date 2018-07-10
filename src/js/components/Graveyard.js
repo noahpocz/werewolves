@@ -1,19 +1,59 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+import { Header, Button, Divider } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
+import PlayerListItem from './PlayerListItem';
+
+import * as actions from '../actions/players';
+
+const styles = {
+	mainContent: {
+		margin: '48px',
+		padding: '48px'
+	}
+};
 
 class Graveyard extends Component {
 	render() {
+		let { players } = this.props;
+		players = players || [];
+		const renderPlayers = () => {
+			return players.map((player, i, players) => {
+				return (
+					<PlayerListItem player={player} />
+				);
+			});
+		};
 		return (
 			<div>
 				<MainHeader />
-				<FlexBox>
-					Graveyard
-				</FlexBox>
+				<div style={styles.mainContent} >
+					<FlexBox justify='start' align='start' >
+						<FlexBox direction='column' align='start'>
+							<Header as='h1' >
+								Graveyard
+							</Header>
+							<FlexBox direction='row' >
+								<Button primary onClick={this._togglePhase} >
+									Go Back
+								</Button>
+							</FlexBox>
+						</FlexBox>
+					</FlexBox>
+					<Divider />
+					{renderPlayers()}
+				</div>
 			</div>
 		);
 	}
 }
 
-export default Graveyard;
+const mapStateToProps = (state) => ({
+	players: state.players.players
+});
+
+export default connect(mapStateToProps, actions)(Graveyard);

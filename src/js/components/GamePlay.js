@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { Header, Button, Divider, Icon } from 'semantic-ui-react';
+import { Header, Button, Divider } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
@@ -41,15 +42,13 @@ class GamePlay extends Component {
 		const { morning } = this.state;
 		let { players } = this.props;
 		players = players || [];
-
 		const renderPlayers = () => {
-			return players.map((player, i, players) => {
+			return players.map((player, i) => {
 				return (
-					<PlayerListItem player={player} />
+					<PlayerListItem player={player} key={i} />
 				);
 			});
 		};
-
 		return (
 			<div>
 				<MainHeader />
@@ -59,9 +58,14 @@ class GamePlay extends Component {
 							<Header as='h1' >
 								{this._phaseFromBool(morning)}
 							</Header>
-							<Button onClick={this._togglePhase} >
-								{`Go to ${this._phaseFromBool(!morning)}`}
-							</Button>
+							<FlexBox direction='row' >
+								<Button primary onClick={this._togglePhase} >
+									{`Go to ${this._phaseFromBool(!morning)}`}
+								</Button>
+								<Button as={Link} to='/graveyard' >
+									Graveyard
+								</Button>
+							</FlexBox>
 						</FlexBox>
 					</FlexBox>
 					<Divider />
