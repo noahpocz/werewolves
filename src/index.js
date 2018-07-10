@@ -37,8 +37,7 @@ ReactDOM.render(
 				<Route path='/gameSetup' component={GameSetup} />
 				<Route path='/addPlayer' component={AddPlayer} />
 				<Route path='/roleList/:index' component={RoleList} />
-				<Route path='/morning' component={GamePlay} />
-				<Route path='/night' component={GamePlay} />
+				<Route path='/gameplay' component={GamePlay} />
 				<Route path='/graveyard' component={Graveyard} />
 			</App>
 		</HashRouter>

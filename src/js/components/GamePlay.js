@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import { Header, Button } from 'semantic-ui-react';
+import { Header, Button, Divider } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
 
 import * as actions from '../actions/players';
+import PlayerListItem from './PlayerListItem';
 
 const styles = {
 	mainContent: {
@@ -21,6 +23,7 @@ class GamePlay extends Component {
 		super();
 
 		this._phaseFromBool = this._phaseFromBool.bind(this);
+		this._togglePhase = this._togglePhase.bind(this);
 
 		this.state = {
 			morning: true
@@ -28,33 +31,45 @@ class GamePlay extends Component {
 	}
 
 	_phaseFromBool(b) {
-		return b ? 'morning' : 'night';
+		return b ? 'Morning' : 'Night';
+	}
+
+	_togglePhase() {
+		this.setState({ morning: !this.state.morning });
 	}
 
 	render() {
-
-		const { history } = this.props;
-
 		const { morning } = this.state;
-
-		const phaseHeader = this._phaseFromBool(morning);
-
+		let { players } = this.props;
+		players = players || [];
+		const renderPlayers = () => {
+			return players.map((player, i) => {
+				return (
+					<PlayerListItem player={player} key={i} />
+				);
+			});
+		};
 		return (
 			<div>
 				<MainHeader />
 				<div style={styles.mainContent} >
-					<FlexBox direction='row' justify='start' >
-						<FlexBox direction='column'>
-							<Header as='h1'>{phaseHeader.charAt(0).toUpperCase() + phaseHeader.slice(1)}</Header>
-							<Button onClick={() => {
-								this.setState({ morning: !morning }, () => {
-									history.push(`/${this._phaseFromBool(!morning)}`);
-								});
-							}}>
-								{`Go to ${this._phaseFromBool(!morning)}`}
-							</Button>
+					<FlexBox justify='start' align='start' >
+						<FlexBox direction='column' align='start'>
+							<Header as='h1' >
+								{this._phaseFromBool(morning)}
+							</Header>
+							<FlexBox direction='row' >
+								<Button primary onClick={this._togglePhase} >
+									{`Go to ${this._phaseFromBool(!morning)}`}
+								</Button>
+								<Button as={Link} to='/graveyard' >
+									Graveyard
+								</Button>
+							</FlexBox>
 						</FlexBox>
 					</FlexBox>
+					<Divider />
+					{renderPlayers()}
 				</div>
 			</div>
 		);

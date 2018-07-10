@@ -1,6 +1,6 @@
 export const players1 = [
 	{
-		name: 'Greg',
+		name: 'Noah',
 		role: {
 			name: 'Werewolf',
 			team: 'Werewolves',
@@ -10,11 +10,11 @@ export const players1 = [
 		alive: true
 	},
 	{
-		name: 'Conrad',
+		name: 'Twix',
 		role: null
 	},
 	{
-		name: 'Elise',
+		name: 'KitKat',
 		role: {
 			name: 'Defender',
 			team: 'Villagers',
@@ -24,7 +24,7 @@ export const players1 = [
 		alive: true
 	},
 	{
-		name: 'Riley',
+		name: 'John',
 		role: {
 			name: 'Fortune Teller',
 			team: 'Villagers',

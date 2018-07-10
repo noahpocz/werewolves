@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Menu } from 'semantic-ui-react';
+import { Menu, Container } from 'semantic-ui-react';
+
+import FlexBox from './custom/FlexBox';
 
 class MainHeader extends Component {
 	render() {
