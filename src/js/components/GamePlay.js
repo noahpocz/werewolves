@@ -73,8 +73,21 @@ class GamePlay extends Component {
 						<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
 					const moveDown = i !== players.length - 1 ?
 						<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
-					const menuItems =
+					const menuItems = morning ?
 						<React.Fragment>
+							<Dropdown.Item>Kill</Dropdown.Item>
+							<Dropdown.Item>Charm</Dropdown.Item>
+							<Divider />
+							<Dropdown.Item>Make Sheriff</Dropdown.Item>
+							<Dropdown.Item>Make Lover</Dropdown.Item>
+							<Divider />
+							{moveUp}
+							{moveDown}
+						</React.Fragment> :
+						<React.Fragment>
+							<Dropdown.Item>Mark for Death</Dropdown.Item>
+							<Dropdown.Item>Mark for Life</Dropdown.Item>
+							<Divider />
 							<Dropdown.Item>Kill</Dropdown.Item>
 							<Dropdown.Item>Charm</Dropdown.Item>
 							<Divider />
@@ -85,26 +98,26 @@ class GamePlay extends Component {
 							{moveDown}
 						</React.Fragment>;
 					return (
-						<PlayerListItem player={player} key={i} menuItems={menuItems} />
+						<PlayerListItem player={player} key={i} menuItems={menuItems} inverted={!morning} />
 					);
 				}
 				return '';
 			});
 		};
 		return (
-			<div style={{ height: window.innerHeight }} >
-				<MainHeader />
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<FlexBox justify='start' align='start' >
 						<FlexBox direction='column' align='start'>
-							<Header as='h1' >
+							<Header inverted={!morning} as='h1' >
 								{this._phaseFromBool(morning)}
 							</Header>
 							<FlexBox direction='row' >
-								<Button primary onClick={this._togglePhase} >
+								<Button primary onClick={this._togglePhase} inverted={!morning} >
 									{`Go to ${this._phaseFromBool(!morning)}`}
 								</Button>
-								<Button as={Link} to='/graveyard' >
+								<Button as={Link} to='/graveyard' inverted={!morning} >
 									Graveyard
 								</Button>
 							</FlexBox>

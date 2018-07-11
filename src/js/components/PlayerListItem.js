@@ -15,7 +15,7 @@ class PlayerListItem extends Component {
 	}
 
 	render() {
-		const { player, index, menuItems } = this.props;
+		const { player, index, menuItems, inverted } = this.props;
 		let { unassignable } = this.props;
 		unassignable = unassignable || false;
 		const icon = <Icon name='ellipsis vertical' size='large' />;
@@ -47,7 +47,9 @@ class PlayerListItem extends Component {
 				Unassigned
 			</Label>;
 		return (
-			<Segment >
+			<Segment inverted={inverted} style={{ backgroundColor: inverted ? '#424242' : '',
+				boxShadow: inverted ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)' : '',
+				border: '1px solid rgba(34,36,38,.15)' }} >
 				<FlexBox direction='row' align='center' justify='between' >
 					{player.name}
 					<FlexBox direction='row' align='center' justify='between' >
