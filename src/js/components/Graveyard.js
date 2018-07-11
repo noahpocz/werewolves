@@ -8,7 +8,7 @@ import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
 import PlayerListItem from './PlayerListItem';
 
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 
 const styles = {
 	mainContent: {
@@ -22,10 +22,13 @@ class Graveyard extends Component {
 		let { players } = this.props;
 		players = players || [];
 		const renderPlayers = () => {
-			return players.map((player, i, players) => {
-				return (
-					<PlayerListItem player={player} />
-				);
+			return players.map((player, i ) => {
+				if (!player.alive) {
+					return (
+						<PlayerListItem player={player} key={i} />
+					);
+				}
+				return '';
 			});
 		};
 		return (
@@ -38,7 +41,7 @@ class Graveyard extends Component {
 								Graveyard
 							</Header>
 							<FlexBox direction='row' >
-								<Button primary onClick={this._togglePhase} >
+								<Button primary as={Link} to='/gameplay' >
 									Go Back
 								</Button>
 							</FlexBox>

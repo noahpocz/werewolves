@@ -7,7 +7,7 @@ import FlexBox from './custom/FlexBox';
 
 import MainHeader from './MainHeader';
 
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 
 const styles = {
 	mainContent: {

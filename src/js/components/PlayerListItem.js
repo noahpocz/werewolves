@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Label, Icon, Segment, Dropdown } from 'semantic-ui-react';
 
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 import FlexBox from './custom/FlexBox';
 
 class PlayerListItem extends Component {

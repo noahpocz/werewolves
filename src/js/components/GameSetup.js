@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dropdown, Header, Divider, Button } from 'semantic-ui-react';
 
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 import PlayerListItem from './PlayerListItem';
 import MainHeader from './MainHeader';
 

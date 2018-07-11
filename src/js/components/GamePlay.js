@@ -7,7 +7,7 @@ import { Header, Button, Divider } from 'semantic-ui-react';
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
 
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 import PlayerListItem from './PlayerListItem';
 
 const styles = {
@@ -24,10 +24,6 @@ class GamePlay extends Component {
 
 		this._phaseFromBool = this._phaseFromBool.bind(this);
 		this._togglePhase = this._togglePhase.bind(this);
-
-		this.state = {
-			morning: true
-		};
 	}
 
 	_phaseFromBool(b) {
@@ -35,11 +31,11 @@ class GamePlay extends Component {
 	}
 
 	_togglePhase() {
-		this.setState({ morning: !this.state.morning });
+		this.props.togglePhase();
 	}
 
 	render() {
-		const { morning } = this.state;
+		const { morning } = this.props;
 		let { players } = this.props;
 		players = players || [];
 		const renderPlayers = () => {
@@ -77,7 +73,8 @@ class GamePlay extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	players: state.players.players
+	players: state.players.players,
+	morning: state.gameState.morning
 });
 
 export default connect(mapStateToProps, actions)(GamePlay);

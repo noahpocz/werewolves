@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Header, Divider, Button, Card, Image, Label, Search } from 'semantic-ui-react';
 
 import { roles } from './mockdata';
-import * as actions from '../actions/players';
+import * as actions from '../actions';
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
 

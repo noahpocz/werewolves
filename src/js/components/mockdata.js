@@ -11,7 +11,8 @@ export const players1 = [
 	},
 	{
 		name: 'Twix',
-		role: null
+		role: null,
+		alive: true
 	},
 	{
 		name: 'KitKat',
