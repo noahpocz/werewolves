@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Header, Button, Divider } from 'semantic-ui-react';
+import { Header, Button, Divider, Segment } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
@@ -21,8 +21,14 @@ class Graveyard extends Component {
 	render() {
 		let { players } = this.props;
 		players = players || [];
+		let playerCount = 0;
+		players.forEach((player) => {
+			if (!player.alive) {
+				playerCount++;
+			}
+		});
 		const renderPlayers = () => {
-			return players.map((player, i ) => {
+			return players.map((player, i) => {
 				if (!player.alive) {
 					return (
 						<PlayerListItem player={player} key={i} />
@@ -48,7 +54,7 @@ class Graveyard extends Component {
 						</FlexBox>
 					</FlexBox>
 					<Divider />
-					{renderPlayers()}
+					{playerCount > 0 ? renderPlayers() : 'No players in graveyard'}
 				</div>
 			</div>
 		);

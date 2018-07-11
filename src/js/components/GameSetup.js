@@ -57,14 +57,15 @@ class GameSetup extends Component {
 					<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
 				const moveDown = i !== players.length - 1 ?
 					<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
-				const menuItems = [
-					<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>,
-					<Divider />,
-					moveUp,
-					moveDown
-				];
+				const menuItems =
+					<React.Fragment>
+						<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
+						<Divider />
+						{moveUp}
+						{moveDown}
+					</React.Fragment>;
 				return (
-					<PlayerListItem player={player} index={i} menuItems={menuItems} key={i} />
+					<PlayerListItem unassignable player={player} index={i} menuItems={menuItems} key={i} />
 				);
 			});
 		};

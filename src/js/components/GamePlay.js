@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Header, Button, Divider } from 'semantic-ui-react';
+import { Header, Button, Divider, Dropdown } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
@@ -24,6 +24,8 @@ class GamePlay extends Component {
 
 		this._phaseFromBool = this._phaseFromBool.bind(this);
 		this._togglePhase = this._togglePhase.bind(this);
+		this._moveUp = this._moveUp.bind(this);
+		this._moveDown = this._moveDown.bind(this);
 	}
 
 	_phaseFromBool(b) {
@@ -34,19 +36,63 @@ class GamePlay extends Component {
 		this.props.togglePhase();
 	}
 
+	_moveUp(index, players) {
+		const { updatePlayers } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index - 1];
+		updatedPlayers[index - 1] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
+	_moveDown(index, players) {
+		const { updatePlayers } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index + 1];
+		updatedPlayers[index + 1] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
 	render() {
 		const { morning } = this.props;
 		let { players } = this.props;
 		players = players || [];
+		let playerCount = 0;
+		players.forEach((player) => {
+			if (player.alive) {
+				playerCount++;
+			}
+		});
 		const renderPlayers = () => {
-			return players.map((player, i) => {
-				return (
-					<PlayerListItem player={player} key={i} />
-				);
+			return players.map((player, i, players) => {
+				if (player.alive) {
+					const moveUp = i !== 0 ?
+						<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
+					const moveDown = i !== players.length - 1 ?
+						<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
+					const menuItems =
+						<React.Fragment>
+							<Dropdown.Item>Kill</Dropdown.Item>
+							<Dropdown.Item>Charm</Dropdown.Item>
+							<Divider />
+							<Dropdown.Item>Make Sheriff</Dropdown.Item>
+							<Dropdown.Item>Make Lover</Dropdown.Item>
+							<Divider />
+							{moveUp}
+							{moveDown}
+						</React.Fragment>;
+					return (
+						<PlayerListItem player={player} key={i} menuItems={menuItems} />
+					);
+				}
+				return '';
 			});
 		};
 		return (
-			<div>
+			<div style={{ height: window.innerHeight }} >
 				<MainHeader />
 				<div style={styles.mainContent} >
 					<FlexBox justify='start' align='start' >
@@ -65,7 +111,7 @@ class GamePlay extends Component {
 						</FlexBox>
 					</FlexBox>
 					<Divider />
-					{renderPlayers()}
+					{playerCount > 0 ? renderPlayers() : 'No players alive'}
 				</div>
 			</div>
 		);

@@ -16,6 +16,8 @@ class PlayerListItem extends Component {
 
 	render() {
 		const { player, index, menuItems } = this.props;
+		let { unassignable } = this.props;
+		unassignable = unassignable || false;
 		const icon = <Icon name='ellipsis vertical' size='large' />;
 		let labelColor = '';
 		if (player.role) {
@@ -38,14 +40,14 @@ class PlayerListItem extends Component {
 			<Label style={{ marginRight: '12px' }} color={labelColor} image >
 				{<img src={player.role.image} alt='Player' />}
 				{player.role.name}
-				{<Icon onClick={() => this._unassignRole(index) } name='delete' />}
+				{ unassignable ? <Icon onClick={() => this._unassignRole(index) } name='delete' /> : ''}
 			</Label>
 			:
 			<Label style={{ marginRight: '12px' }} >
 				Unassigned
 			</Label>;
 		return (
-			<Segment>
+			<Segment >
 				<FlexBox direction='row' align='center' justify='between' >
 					{player.name}
 					<FlexBox direction='row' align='center' justify='between' >
@@ -63,7 +65,7 @@ class PlayerListItem extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	players: state.players.players
+	players: state.players.players,
 });
 
 export default connect(mapStateToProps, actions)(PlayerListItem);
