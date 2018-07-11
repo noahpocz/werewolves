@@ -56,6 +56,13 @@ class GamePlay extends Component {
 		updatePlayers(updatedPlayers);
 	}
 
+	_killPlayer(index) {
+		const { updatePlayers, players } = this.props;
+		const updatedPlayers = [...players];
+		updatedPlayers[index].alive = false;
+		updatePlayers(updatedPlayers);
+	}
+
 	render() {
 		const { morning } = this.props;
 		let { players } = this.props;
@@ -73,9 +80,10 @@ class GamePlay extends Component {
 						<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
 					const moveDown = i !== players.length - 1 ?
 						<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
+					const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(i)} >Kill</Dropdown.Item>;
 					const menuItems = morning ?
 						<React.Fragment>
-							<Dropdown.Item>Kill</Dropdown.Item>
+							{killPlayer}
 							<Dropdown.Item>Charm</Dropdown.Item>
 							<Divider />
 							<Dropdown.Item>Make Sheriff</Dropdown.Item>
@@ -88,7 +96,7 @@ class GamePlay extends Component {
 							<Dropdown.Item>Mark for Death</Dropdown.Item>
 							<Dropdown.Item>Mark for Life</Dropdown.Item>
 							<Divider />
-							<Dropdown.Item>Kill</Dropdown.Item>
+							{killPlayer}
 							<Dropdown.Item>Charm</Dropdown.Item>
 							<Divider />
 							<Dropdown.Item>Make Sheriff</Dropdown.Item>
