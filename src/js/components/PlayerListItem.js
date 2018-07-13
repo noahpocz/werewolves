@@ -46,12 +46,19 @@ class PlayerListItem extends Component {
 			<Label style={{ marginRight: '12px' }} >
 				Unassigned
 			</Label>;
+
+		const sheriffBadge = player.sheriff ? <Icon name='star' size='large' /> : '';
 		return (
 			<Segment inverted={inverted} style={{ backgroundColor: inverted ? '#424242' : '',
 				boxShadow: inverted ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)' : '',
-				border: '1px solid rgba(34,36,38,.15)' }} >
+				border: '1px solid rgba(34,36,38,.15)' }} color={player.charmed ? 'purple' : ''} >
 				<FlexBox direction='row' align='center' justify='between' >
-					{player.name}
+					<FlexBox direction='row' align='center' justify='between' >
+						<FlexBox marginRight='small' >
+							{player.name}
+						</FlexBox>
+						{sheriffBadge}
+					</FlexBox>
 					<FlexBox direction='row' align='center' justify='between' >
 						{label}
 						<Dropdown icon={icon} >

@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Dropdown, Header, Divider, Button } from 'semantic-ui-react';
 
-import * as actions from '../actions';
+import PlayerList from './PlayerList';
 import PlayerListItem from './PlayerListItem';
 import MainHeader from './MainHeader';
+
+import * as actions from '../actions';
 
 const styles = {
 	mainContent: {
@@ -27,8 +29,8 @@ class GameSetup extends Component {
 		this._moveDown = this._moveDown.bind(this);
 	}
 
-	_moveUp(index, players) {
-		const { updatePlayers } = this.props;
+	_moveUp(index) {
+		const { updatePlayers, players } = this.props;
 		let temp = '';
 		const updatedPlayers = [...players];
 		temp = updatedPlayers[index];
@@ -37,8 +39,8 @@ class GameSetup extends Component {
 		updatePlayers(updatedPlayers);
 	}
 
-	_moveDown(index, players) {
-		const { updatePlayers } = this.props;
+	_moveDown(index) {
+		const { updatePlayers, players } = this.props;
 		let temp = '';
 		const updatedPlayers = [...players];
 		temp = updatedPlayers[index];
@@ -49,44 +51,28 @@ class GameSetup extends Component {
 
 	render() {
 		let { players } = this.props;
+		const { morning } = this.props;
 		players = players || [];
-
-		const renderPlayers = () => {
-			return players.map((player, i, players) => {
-				const moveUp = i !== 0 ?
-					<Dropdown.Item onClick={() => this._moveUp(i, players)} >Move Up</Dropdown.Item> : '';
-				const moveDown = i !== players.length - 1 ?
-					<Dropdown.Item onClick={() => this._moveDown(i, players)} >Move Down</Dropdown.Item> : '';
-				const menuItems =
-					<React.Fragment>
-						<Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
-						<Divider />
-						{moveUp}
-						{moveDown}
-					</React.Fragment>;
-				return (
-					<PlayerListItem unassignable player={player} index={i} menuItems={menuItems} key={i} />
-				);
-			});
-		};
 		return (
-			<div>
-				<MainHeader />
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<div>
-						<Header as='h1' >
+						<Header as='h1' inverted={!morning} >
 							Select Roles
 						</Header>
-						<Button primary as={Link} to='/gameplay' >Confirm</Button>
-						<Button as={Link} to={'/addPlayer'} >
+						<Button primary as={Link} to='/gameplay' inverted={!morning} >
+							Confirm
+						</Button>
+						<Button as={Link} to={'/addPlayer'} inverted={!morning} >
 							Add Player
 						</Button>
-						<Button>
+						<Button inverted={!morning} >
 							Randomize
 						</Button>
 						<Divider />
 					</div>
-					{renderPlayers()}
+					<PlayerList players={players} />
 				</div>
 			</div>
 		);
@@ -94,7 +80,8 @@ class GameSetup extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	players: state.players.players
+	players: state.players.players,
+	morning: state.gameState.morning
 });
 
 export default connect(mapStateToProps, actions)(GameSetup);

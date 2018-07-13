@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Header, Button, Divider, Segment } from 'semantic-ui-react';
+import { Header, Button, Divider } from 'semantic-ui-react';
 
 import FlexBox from './custom/FlexBox';
 import MainHeader from './MainHeader';
-import PlayerListItem from './PlayerListItem';
+import PlayerList from './PlayerList';
 
 import * as actions from '../actions';
 
@@ -18,43 +18,71 @@ const styles = {
 };
 
 class Graveyard extends Component {
+
+	constructor(props) {
+		super(props);
+
+		this._revivePlayer = this._revivePlayer.bind(this);
+	}
+
+	_revivePlayer(index) {
+		const { updatePlayers, updateDeadPlayers, players, deadPlayers } = this.props;
+		const updatedDeadPlayers = deadPlayers ? [...deadPlayers] : [];
+		const updatedPlayers = [...players];
+		updatedPlayers.splice(index, 0, updatedPlayers[index]);
+		updatedDeadPlayers.splice(index, 1);
+		updatePlayers(updatedPlayers);
+		updateDeadPlayers(updatedDeadPlayers);
+	}
+
+	_moveUp(index) {
+		const { updatePlayers, players } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index - 1];
+		updatedPlayers[index - 1] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
+	_moveDown(index) {
+		const { updatePlayers, players } = this.props;
+		let temp = '';
+		const updatedPlayers = [...players];
+		temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[index + 1];
+		updatedPlayers[index + 1] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
 	render() {
-		let { players } = this.props;
-		players = players || [];
-		let playerCount = 0;
-		players.forEach((player) => {
-			if (!player.alive) {
-				playerCount++;
-			}
-		});
-		const renderPlayers = () => {
-			return players.map((player, i) => {
-				if (!player.alive) {
-					return (
-						<PlayerListItem player={player} key={i} />
-					);
-				}
-				return '';
-			});
-		};
+		let { deadPlayers } = this.props;
+		const { morning } = this.props;
+		deadPlayers = deadPlayers || [];
+		console.log('this.props.match: ', this.props.match);
 		return (
-			<div>
-				<MainHeader />
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<FlexBox justify='start' align='start' >
 						<FlexBox direction='column' align='start'>
-							<Header as='h1' >
+							<Header inverted={!morning} as='h1' >
 								Graveyard
 							</Header>
 							<FlexBox direction='row' >
-								<Button primary as={Link} to='/gameplay' >
+								<Button primary as={Link} to='/gameplay' inverted={!morning} >
 									Go Back
 								</Button>
 							</FlexBox>
 						</FlexBox>
 					</FlexBox>
 					<Divider />
-					{playerCount > 0 ? renderPlayers() : 'No players in graveyard'}
+					{deadPlayers.length > 0 ?
+						<PlayerList players={deadPlayers} /> :
+						<Header inverted={!morning} as='h3' >
+								No players are dead.
+						</Header>
+					}
 				</div>
 			</div>
 		);
@@ -62,7 +90,9 @@ class Graveyard extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	players: state.players.players
+	players: state.players.players,
+	deadPlayers: state.players.deadPlayers,
+	morning: state.gameState.morning
 });
 
 export default connect(mapStateToProps, actions)(Graveyard);

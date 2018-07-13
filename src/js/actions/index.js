@@ -1,6 +1,6 @@
 import { togglePhase } from './gameState';
-import { initializePlayers, updatePlayers } from './players';
+import { initializePlayers, initializeDeadPlayers, updatePlayers, updateDeadPlayers } from './players';
 
 export {
-	togglePhase, initializePlayers, updatePlayers
+	togglePhase, initializePlayers, updatePlayers, updateDeadPlayers, initializeDeadPlayers
 };

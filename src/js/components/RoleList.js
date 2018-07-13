@@ -112,7 +112,7 @@ class RoleList extends Component {
 				<div style={styles.mainContent} >
 					<div>
 						<Header as='h1' >
-						Assign Role
+							Assign Role
 							<Header.Subheader>
 								<b>{players.length > 0 ? `${players[index].name}: ${currentRole}` : ''}</b>
 							</Header.Subheader>
@@ -122,7 +122,9 @@ class RoleList extends Component {
 								<Button primary >Randomize</Button>
 								<Button as={Link} to='/gameSetup' >Cancel</Button>
 							</FlexBox>
-							<Search onSearchChange={(e) => this._onSearchChange(e)} showNoResults={false} />
+							<Search placeholder='Search'
+								onSearchChange={(e) => this._onSearchChange(e)}
+								showNoResults={false} />
 						</FlexBox>
 						<Divider />
 					</div>

@@ -7,12 +7,14 @@ export const players1 = [
 			description: 'Werewolves like to eat things.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 		},
-		alive: true
+		charmed: false,
+		sheriff: false
 	},
 	{
 		name: 'Twix',
 		role: null,
-		alive: true
+		charmed: false,
+		sheriff: false
 	},
 	{
 		name: 'KitKat',
@@ -22,7 +24,8 @@ export const players1 = [
 			description: 'Defenders defend other people.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 		},
-		alive: true
+		charmed: false,
+		sheriff: false
 	},
 	{
 		name: 'John',
@@ -32,7 +35,8 @@ export const players1 = [
 			description: 'Fortune Tellers like to tell fortunes.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 		},
-		alive: true
+		charmed: false,
+		sheriff: false
 	},
 	{
 		name: 'Ryan',
@@ -42,7 +46,8 @@ export const players1 = [
 			description: 'Villagers are useless.',
 			image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 		},
-		alive: true
+		charmed: false,
+		sheriff: false
 	},
 ];
 

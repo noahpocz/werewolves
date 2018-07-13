@@ -42,7 +42,7 @@ class AddPlayer extends Component {
 			name,
 			email,
 			role: null,
-			alive: true
+			charmed: true
 		};
 
 		newPlayers.push(newUser);

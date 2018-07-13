@@ -11,6 +11,7 @@ class LandingPage extends Component {
 
 	componentDidMount() {
 		this.props.initializePlayers();
+		this.props.initializeDeadPlayers();
 	}
 
 	render() {
