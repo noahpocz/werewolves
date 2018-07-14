@@ -12,10 +12,50 @@ class PlayerList extends Component {
 	constructor(props) {
 		super(props);
 
+		this._moveUp = this._moveUp.bind(this);
+		this._moveDown = this._moveDown.bind(this);
 		this._revivePlayer = this._revivePlayer.bind(this);
 		this._killPlayer = this._killPlayer.bind(this);
 		this._charmPlayer = this._charmPlayer.bind(this);
 		this._makeSheriff = this._makeSheriff.bind(this);
+	}
+
+	_moveUp(name) {
+		const { updatePlayers, players } = this.props;
+		const updatedPlayers = [...players];
+		const index = updatedPlayers.findIndex((player) => player.name === name);
+		let aboveIsDead = true;
+		let aboveIndex = index - 1;
+		while (aboveIsDead === true) {
+			if (updatedPlayers[aboveIndex].alive === true) {
+				aboveIsDead = false;
+			} else {
+				aboveIndex -= 1;
+			}
+		}
+		const temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[aboveIndex];
+		updatedPlayers[aboveIndex] = temp;
+		updatePlayers(updatedPlayers);
+	}
+
+	_moveDown(name) {
+		const { updatePlayers, players } = this.props;
+		const updatedPlayers = [...players];
+		const index = updatedPlayers.findIndex((player) => player.name === name);
+		let belowIsDead = true;
+		let belowIndex = index + 1;
+		while (belowIsDead === true) {
+			if (updatedPlayers[belowIndex].alive === true) {
+				belowIsDead = false;
+			} else {
+				belowIndex += 1;
+			}
+		}
+		const temp = updatedPlayers[index];
+		updatedPlayers[index] = updatedPlayers[belowIndex];
+		updatedPlayers[belowIndex] = temp;
+		updatePlayers(updatedPlayers);
 	}
 
 	/* Move player from deadPlayers to players */
@@ -87,9 +127,9 @@ class PlayerList extends Component {
 			return players.map((player, i, players) => {
 				const assignRole = <Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>;
 				const moveUp = i !== 0 ?
-					<Dropdown.Item onClick={() => this._moveUp(i)} >Move Up</Dropdown.Item> : '';
+					<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : '';
 				const moveDown = i !== players.length - 1 ?
-					<Dropdown.Item onClick={() => this._moveDown(i)} >Move Down</Dropdown.Item> : '';
+					<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : '';
 				const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>;
 				const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>;
 				const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>;
