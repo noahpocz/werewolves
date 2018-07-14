@@ -81,7 +81,8 @@ class GamePlay extends Component {
 								{this._phaseFromBool(morning)}
 							</Header>
 							<FlexBox direction='row' >
-								<Button primary onClick={this._togglePhase} inverted={!morning} >
+								<Button primary onClick={this._togglePhase} inverted={!morning}
+									style={{ backgroundColor: morning ? '' : '#fafafa', color: morning ? '' : '#313131' }} >
 									{`Go to ${this._phaseFromBool(!morning)}`}
 								</Button>
 								<Button as={Link} to='/graveyard' inverted={!morning} >
