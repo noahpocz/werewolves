@@ -61,7 +61,7 @@ class Graveyard extends Component {
 		deadPlayers = deadPlayers || [];
 		console.log('this.props.match: ', this.props.match);
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
 				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<FlexBox justify='start' align='start' >

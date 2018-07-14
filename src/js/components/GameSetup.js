@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Dropdown, Header, Divider, Button } from 'semantic-ui-react';
+import { Header, Divider, Button } from 'semantic-ui-react';
 
 import PlayerList from './PlayerList';
-import PlayerListItem from './PlayerListItem';
 import MainHeader from './MainHeader';
 
 import * as actions from '../actions';
@@ -54,7 +53,7 @@ class GameSetup extends Component {
 		const { morning } = this.props;
 		players = players || [];
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
 				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<div>

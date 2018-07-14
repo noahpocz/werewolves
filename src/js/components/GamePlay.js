@@ -72,7 +72,7 @@ class GamePlay extends Component {
 		let { players } = this.props;
 		players = players || [];
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '' : '#313131' }} >
+			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
 				<MainHeader inverted={!morning} />
 				<div style={styles.mainContent} >
 					<FlexBox justify='start' align='start' >
