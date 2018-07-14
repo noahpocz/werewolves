@@ -73,7 +73,7 @@ class PlayerList extends Component {
 		const updatedPlayers = [...players];
 		const index = updatedPlayers.findIndex((player) => player.name === name);
 		updatedPlayers[index].alive = false;
-		updatedPlayers[index].sheriff = true;
+		updatedPlayers[index].sheriff = false;
 		updatePlayers(updatedPlayers);
 	}
 
@@ -103,14 +103,8 @@ class PlayerList extends Component {
 		const { updatePlayers, players } = this.props;
 		const updatedPlayers = [...players];
 		const index = updatedPlayers.findIndex((player) => player.name === name);
-		const currentLovers = updatedPlayers.map((player, i) => {
-			if (player.lover) {
-				player.tempIndex = i;
-				return player;
-			}
-			return null;
-		});
-		const isCurrentLover = currentLovers.some(currentLover => currentLover.tempIndex === index);
+		const currentLovers = updatedPlayers.some((player, i) => player.lover);
+		const isCurrentLover = currentLovers.some(currentLover => currentLover.name === name);
 		if (isCurrentLover) {
 			updatedPlayers[index].lover = false;
 		} else if (currentLovers.length < 2) {
@@ -123,66 +117,99 @@ class PlayerList extends Component {
 
 	render() {
 		const { players, morning, match } = this.props;
+		let gameState = '';
+		if (match.url.includes('gameSetup')) {
+			gameState = 'gameSetup';
+		} else if (match.url.includes('gameplay')) {
+			gameState = 'gameplay';
+		} else if (match.url.includes('graveyard')) {
+			gameState = 'graveyard';
+		}
+		console.log('gameState: ', gameState);
 		const renderPlayers = () => {
 			return players.map((player, i, players) => {
-				const assignRole = <Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>;
-				const moveUp = i !== 0 ?
-					<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : '';
-				const moveDown = i !== players.length - 1 ?
-					<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : '';
-				const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>;
-				const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>;
-				const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>;
-				const charmDeadPlayer = <Dropdown.Item onClick={() => this._charmDeadPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>;
-				const makeSheriff = <Dropdown.Item onClick={() => this._makeSheriff(player.name)} >{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}</Dropdown.Item>;
-				const makeLover = <Dropdown.Item>Make Lover</Dropdown.Item>;
-				const markForDeath = <Dropdown.Item>Mark for Death</Dropdown.Item>;
-				const markForLife = <Dropdown.Item>Mark for Life</Dropdown.Item>;
-				const divider = <Divider />;
-				let menuItems = '';
-				if (match.url.includes('gameSetup')) {
-					menuItems = [
-						assignRole,
-						divider,
-						moveUp,
-						moveDown
-					];
-				} else if (match.url.includes('gameplay')) {
-					if (morning) {
-						menuItems = [
-							killPlayer,
-							charmPlayer,
-							divider,
-							makeSheriff,
-							makeLover,
-							divider,
-							moveUp,
-							moveDown
-						];
-					} else {
-						menuItems = [
-							markForDeath,
-							markForLife,
-							divider,
-							killPlayer,
-							charmPlayer,
-							divider,
-							makeSheriff,
-							makeLover,
-							divider,
-							moveUp,
-							moveDown
-						];
-					}
-				} else if (match.url.includes('graveyard')) {
-					menuItems = [
-						revivePlayer,
-						charmDeadPlayer
-					];
+				let renderCondition = true;
+				switch (gameState) {
+					case 'gameSetup':
+						renderCondition = true;
+						break;
+					case 'gameplay':
+						renderCondition = player.alive;
+						break;
+					case 'graveyard':
+						renderCondition = !player.alive;
+						break;
+					default:
+						renderCondition = true;
 				}
-				return (
-					<PlayerListItem player={player} key={i} menuItems={menuItems} inverted={!morning} />
-				);
+				console.log('renderCondition: ', player.name, ': ', renderCondition);
+				if (renderCondition) {
+					const assignRole = <Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>;
+					const moveUp = i !== 0 ?
+						<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : '';
+					const moveDown = i !== players.length - 1 ?
+						<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : '';
+					const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>;
+					const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>;
+					const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>;
+					const charmDeadPlayer = <Dropdown.Item onClick={() => this._charmDeadPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>;
+					const makeSheriff = <Dropdown.Item onClick={() => this._makeSheriff(player.name)} >{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}</Dropdown.Item>;
+					const makeLover = <Dropdown.Item>Make Lover</Dropdown.Item>;
+					const markForDeath = <Dropdown.Item>Mark for Death</Dropdown.Item>;
+					const markForLife = <Dropdown.Item>Mark for Life</Dropdown.Item>;
+					const divider = <Divider />;
+					let menuItems = '';
+					switch (gameState) {
+						case 'gameSetup':
+							menuItems = [
+								assignRole,
+								divider,
+								moveUp,
+								moveDown
+							];
+							break;
+						case 'gameplay':
+							if (morning) {
+								menuItems = [
+									killPlayer,
+									charmPlayer,
+									divider,
+									makeSheriff,
+									makeLover,
+									divider,
+									moveUp,
+									moveDown
+								];
+							} else {
+								menuItems = [
+									markForDeath,
+									markForLife,
+									divider,
+									killPlayer,
+									charmPlayer,
+									divider,
+									makeSheriff,
+									makeLover,
+									divider,
+									moveUp,
+									moveDown
+								];
+							}
+							break;
+						case 'graveyard':
+							menuItems = [
+								revivePlayer,
+								charmDeadPlayer
+							];
+							break;
+						default:
+							menuItems = [];
+					}
+					return (
+						<PlayerListItem player={player} key={i} menuItems={menuItems} inverted={!morning} />
+					);
+				}
+				return '';
 			});
 		};
 		return (
