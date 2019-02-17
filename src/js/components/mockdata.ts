@@ -1,4 +1,6 @@
-export const players1 = [
+import { Player, Role } from '../model/player'
+
+export const players1: Array<Player> = [
 	{
 		name: 'Noah',
 		role: {
@@ -14,7 +16,7 @@ export const players1 = [
 	},
 	{
 		name: 'Twix',
-		role: null,
+		role: undefined,
 		alive: true,
 		charmed: false,
 		sheriff: false,
@@ -59,9 +61,9 @@ export const players1 = [
 		sheriff: false,
 		lover: false
 	},
-];
+]
 
-export const roles = [
+export const roles: Array<Role> = [
 	{
 		name: 'Werewolf',
 		team: 'Werewolves',
@@ -152,9 +154,4 @@ export const roles = [
 		description: 'The Piper charms people.',
 		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
 	},
-];
-
-export const metadata = {
-	sheriff: null,
-
-};
+]

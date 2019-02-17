@@ -112,7 +112,7 @@
 			 "max-len": [
 					"warn",
 					{
-							"code": 120
+							"code": 150
 					}
 			 ],
 			 "no-trailing-spaces": 2,
@@ -126,7 +126,7 @@
 			 "jsx-quotes": ["error", "prefer-single"],
 			 "semi": [
 					"error",
-					"always"
+					"never"
 			 ],
 			 "semi-style": 2,
 			 "space-infix-ops": 2,
