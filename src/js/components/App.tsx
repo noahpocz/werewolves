@@ -2,7 +2,7 @@ import React, { Component, ReactElement } from 'react'
 import { Switch, withRouter } from 'react-router-dom'
 
 type Props = {
-	children: ReactElement
+	children: any
 	history: any
 	location: any
 	match: any
