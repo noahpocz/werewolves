@@ -62,6 +62,14 @@ class PlayerList extends Component<Props> {
 		updatePlayers(updatedPlayers)
 	}
 
+	/* Delete player from the list */
+	_deletePlayer = (name: String) => {
+		const { updatePlayers, players } = this.props
+		let updatedPlayers = [...players]
+		updatedPlayers = updatedPlayers.filter(player => player.name !== name)
+		updatePlayers(updatedPlayers)
+	}
+
 	/* Move player from deadPlayers to players */
 	_revivePlayer = (name: string) => {
 		const { updatePlayers, players } = this.props
@@ -95,11 +103,11 @@ class PlayerList extends Component<Props> {
 		const { updatePlayers, players } = this.props
 		const updatedPlayers = [...players]
 		const currentSheriffIndex = updatedPlayers.findIndex(player => player.sheriff)
-		if (currentSheriffIndex > 0) {
+		const currentPlayerIndex = updatedPlayers.findIndex(player => player.name === name)
+		if (currentSheriffIndex >= 0 && currentSheriffIndex !== currentPlayerIndex) {
 			updatedPlayers[currentSheriffIndex].sheriff = false
 		}
-		const index = updatedPlayers.findIndex(player => player.name === name)
-		updatedPlayers[index].sheriff = !updatedPlayers[index].sheriff
+		updatedPlayers[currentPlayerIndex].sheriff = !updatedPlayers[currentPlayerIndex].sheriff
 		updatePlayers(updatedPlayers)
 	}
 
@@ -158,6 +166,7 @@ class PlayerList extends Component<Props> {
 						<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : undefined
 					const moveDown = i !== players.length - 1 ?
 						<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : undefined
+					const deletePlayer = <Dropdown.Item onClick={() => this._deletePlayer(player.name)} style={{ color: 'red' }}  >Delete</Dropdown.Item>
 					const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>
 					const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>
 					const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>
@@ -175,7 +184,9 @@ class PlayerList extends Component<Props> {
 								assignRole,
 								divider,
 								moveUp,
-								moveDown
+								moveDown,
+								divider,
+								deletePlayer
 							]
 							break
 						case 'gameplay':

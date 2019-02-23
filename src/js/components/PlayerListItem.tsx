@@ -60,7 +60,7 @@ class PlayerListItem extends Component<Props> {
 				Unassigned
 			</Label>
 
-		const sheriffBadge = player.sheriff ? <Icon name='star' size='large' /> : ''
+		const sheriffBadge = player.sheriff ? <Icon name='star' size='large' /> : undefined
 		return (
 			<Segment inverted={inverted} style={{ backgroundColor: inverted ? '#424242' : '',
 				boxShadow: inverted ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)' : '',

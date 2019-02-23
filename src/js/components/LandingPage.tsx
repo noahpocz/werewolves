@@ -10,14 +10,12 @@ import * as actions from '../actions'
 type Props = {
 	// Redux Action Creators
 	initializePlayers: typeof actions.initializePlayers
-	initializeDeadPlayers: typeof actions.initializeDeadPlayers
 }
 
 class LandingPage extends Component<Props> {
 
 	componentDidMount() {
 		this.props.initializePlayers()
-		this.props.initializeDeadPlayers()
 	}
 
 	render() {
@@ -54,7 +52,6 @@ class LandingPage extends Component<Props> {
 
 const actionCreators = {
 	initializePlayers: actions.initializePlayers,
-	initializeDeadPlayers: actions.initializeDeadPlayers
 }
 
 export default connect(null, actionCreators)(LandingPage)
