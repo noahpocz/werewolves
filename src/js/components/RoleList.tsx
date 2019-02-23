@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Header, Divider, Button, Card, Image, Label, Search } from 'semantic-ui-react'
 
-import { roles } from './mockdata'
 import FlexBox from './custom/FlexBox'
 import MainHeader from './MainHeader'
 
-import { Players, Player, Role } from '../model/player'
+import { Players, Player, Role, roles } from '../model/player'
 
 import * as actions from '../actions'
 import { RootState } from '../reducers'
@@ -20,7 +19,6 @@ type Props = {
 	morning: boolean
 	match: any
 	updatePlayers: typeof actions.updatePlayers
-	updateDeadPlayers: typeof actions.updateDeadPlayers
 }
 
 type State = {
