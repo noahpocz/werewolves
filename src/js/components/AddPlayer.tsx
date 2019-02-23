@@ -12,6 +12,11 @@ import { Players, Player } from '../model/player'
 import * as actions from '../actions'
 import { RootState } from '../reducers'
 
+function isEmpty(str: string) {
+	const trimmed = str.trim()
+	return (!trimmed || 0 === trimmed.length)
+}
+
 type Props = {
 	players: Players
 	history: any
@@ -38,18 +43,23 @@ class AddPlayer extends Component<Props, State> {
 		const { name, email } = this.state
 		const newPlayers = [...players]
 		const newUser: Player = {
-			name,
-			email,
+			name: name.trim(),
+			email: email.trim(),
 			role: undefined,
-			charmed: true,
+			charmed: false,
 			alive: true,
-			sheriff: true,
+			sheriff: false,
 			lover: false
 		}
 
 		newPlayers.push(newUser)
 		updatePlayers(newPlayers)
 		history.push('/gameSetup')
+	}
+
+	_buttonDisabled = () => {
+		const { name, email } = this.state
+		return isEmpty(name) || isEmpty(email)
 	}
 
 	render() {
@@ -76,7 +86,7 @@ class AddPlayer extends Component<Props, State> {
 								onChange={(event) => { this.setState({ email: event.target.value }) }} />
 							<br />
 							<FlexBox style={{ width: '100%' }} direction='row' justify='end'>
-								<Button primary onClick={this._submit}>Submit</Button>
+								<Button primary disabled={this._buttonDisabled()} onClick={this._submit}>Submit</Button>
 								<Button as={Link} to={'/gameSetup'} style={{ margin: 0 }} >Cancel</Button>
 							</FlexBox>
 						</FlexBox>
@@ -91,4 +101,8 @@ const mapStateToProps = (state: RootState) => ({
 	players: state.players.players
 })
 
-export default connect(mapStateToProps, null)(AddPlayer)
+const actionCreators = {
+	updatePlayers: actions.updatePlayers
+}
+
+export default connect(mapStateToProps, actionCreators)(AddPlayer)

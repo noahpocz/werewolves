@@ -44,12 +44,12 @@ ReactDOM.render(
 	<Provider store={store} >
 		<HashRouter>
 			<App>
-				<Route exact path="/" component={LandingPage} />
-				<Route path="/gameSetup" component={GameSetup} />
-				<Route path="/addPlayer" component={AddPlayer} />
-				<Route path="/roleList/:index" component={RoleList} />
-				<Route path="/gameplay" component={GamePlay} />
-				<Route path="/graveyard" component={Graveyard} />
+				<Route exact path='/' component={LandingPage} />
+				<Route path='/gameSetup' component={GameSetup} />
+				<Route path='/addPlayer' component={AddPlayer} />
+				<Route path='/roleList/:index' component={RoleList} />
+				<Route path='/gameplay' component={GamePlay} />
+				<Route path='/graveyard' component={Graveyard} />
 			</App>
 		</HashRouter>
 	</Provider>
