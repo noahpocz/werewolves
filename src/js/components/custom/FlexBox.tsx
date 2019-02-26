@@ -97,12 +97,8 @@ class FlexBox extends Component<Props> {
 			...paddingObj, ...marginObj, ...fullObj, ...style
 		}
 
-		console.log('finalStyling BEFORE: ', finalStyling)
-
 		/* Delete undefined fields */
 		Object.keys(finalStyling).forEach(key => finalStyling[key] === undefined || finalStyling[key] === '' && delete finalStyling[key])
-
-		console.log('finalStyling AFTER: ', finalStyling)
 
 		return (
 			<div style={finalStyling} {...other} >
