@@ -1,0 +1,23 @@
+{
+	"extends": "tslint-config-airbnb",
+	"rules": {
+		"indent": [true, "tabs"],
+		"ter-indent": [
+			true,
+			"tab",
+			{ "SwitchCase": 1 }
+		],
+		"semicolon": [true, "never"],
+		"align": false,
+		"import-name": false,
+		"max-line-length": [true, 150],
+		"trailing-comma": false,
+		"object-shorthand-properties-first": false,
+		"function-name": false,
+		"quotemark": [true, "single"],
+		"prefer-array-literal": false,
+		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+		"no-increment-decrement": false,
+		"no-unused-variable": true
+	}
+}
