@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Route, HashRouter } from 'react-router-dom'
+import { Route, BrowserRouter } from 'react-router-dom'
 
 /* REDUX */
 import { Provider } from 'react-redux'
@@ -42,7 +42,7 @@ store.subscribe(throttle(() => { saveState(store.getState()) }, 1000))
 const element = document.getElementById('root')
 ReactDOM.render(
 	<Provider store={store} >
-		<HashRouter>
+		<BrowserRouter>
 			<App>
 				<Route exact path='/' component={LandingPage} />
 				<Route path='/gameSetup' component={GameSetup} />
@@ -51,7 +51,7 @@ ReactDOM.render(
 				<Route path='/gameplay' component={GamePlay} />
 				<Route path='/graveyard' component={Graveyard} />
 			</App>
-		</HashRouter>
+		</BrowserRouter>
 	</Provider>
 	, element)
 

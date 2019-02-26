@@ -29,7 +29,7 @@ class GameSetup extends Component<Props> {
 						<Button as={Link} to={'/addPlayer'} inverted={!morning} >
 							Add Player
 						</Button>
-						<Button inverted={!morning} >
+						<Button disabled inverted={!morning} >
 							Randomize
 						</Button>
 						<Divider />
