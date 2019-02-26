@@ -18,50 +18,48 @@ export type Player = {
 
 export type Players = Array<Player>
 
-'./'
-
 export const roles: Array<Role> = [
 	{
 		name: 'Werewolf',
 		team: 'Werewolves',
 		description: 'Werewolves like to eat things.',
-		image: './img/werewolf.jpg'
+		image: 'https://imgur.com/OoBCrfl.jpg'
 	},
 	{
 		name: 'Villager',
 		team: 'Villagers',
 		description: 'Villagers are useless.',
-		image: './img/villager.jpg'
+		image: 'https://imgur.com/jmUN6iN.jpg'
 	},
 	{
 		name: 'Defender',
 		team: 'Villagers',
 		description: 'Defenders defend other people.',
-		image: './img/defender.jpg'
+		image: 'https://imgur.com/xqvmm6G.jpg'
 	},
 	{
 		name: 'Fortune Teller',
 		team: 'Villagers',
 		description: 'Fortune Tellers like to tell fortunes.',
-		image: './img/fortuneTeller.jpg'
+		image: 'https://imgur.com/65JgSjs.jpg'
 	},
 	{
 		name: 'Witch',
 		team: 'Villagers',
 		description: 'The witch has two spooky potions.',
-		image: './img/witch.jpg'
+		image: 'https://imgur.com/FQOoE7q.jpg'
 	},
 	{
 		name: 'Elder',
 		team: 'Villagers',
 		description: 'The elder has fallen and can\'t get up.',
-		image: './img/elder.jpg'
+		image: 'https://imgur.com/0FdYO2a.jpg'
 	},
 	{
 		name: 'Fox',
 		team: 'Villagers',
 		description: 'The fox can find out if you\'re spooky.',
-		image: './img/fox.jpg'
+		image: 'https://imgur.com/pfzTCYY.jpg'
 	},
 	{
 		name: 'Little Girl',
@@ -73,13 +71,13 @@ export const roles: Array<Role> = [
 		name: 'Hunter',
 		team: 'Villagers',
 		description: 'His gun goes pew pew when he dies.',
-		image: './img/hunter.jpg'
+		image: 'https://imgur.com/w3Sgalv.jpg'
 	},
 	{
 		name: 'Cupid',
 		team: 'Villagers',
 		description: 'Makes people fall in love.',
-		image: './img/cupid.jpg'
+		image: 'https://imgur.com/lLCcEgv.jpg'
 	},
 	{
 		name: 'Two Sisters',
@@ -97,7 +95,7 @@ export const roles: Array<Role> = [
 		name: 'Scapegoat',
 		team: 'Villagers',
 		description: 'Point to him when things go bad.',
-		image: './img/scapegoat.jpg'
+		image: 'https://imgur.com/iCh4fzZ.jpg'
 	},
 	{
 		name: 'Village Idiot',
@@ -109,6 +107,6 @@ export const roles: Array<Role> = [
 		name: 'Piper',
 		team: 'Other',
 		description: 'The Piper charms people.',
-		image: './img/piper.jpg'
+		image: 'https://imgur.com/ApPk72N.jpg'
 	},
 ]

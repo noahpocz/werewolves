@@ -7,7 +7,7 @@ export const players1: Array<Player> = [
 			name: 'Werewolf',
 			team: 'Werewolves',
 			description: 'Werewolves like to eat things.',
-			image: './img/werewolf.jpg'
+			image: 'https://imgur.com/OoBCrfl.jpg'
 		},
 		alive: true,
 		charmed: false,
@@ -28,7 +28,7 @@ export const players1: Array<Player> = [
 			name: 'Defender',
 			team: 'Villagers',
 			description: 'Defenders defend other people.',
-			image: './img/defender.jpg'
+			image: 'https://imgur.com/xqvmm6G.jpg'
 		},
 		alive: true,
 		charmed: false,
@@ -41,7 +41,7 @@ export const players1: Array<Player> = [
 			name: 'Fortune Teller',
 			team: 'Villagers',
 			description: 'Fortune Tellers like to tell fortunes.',
-			image: './img/fortuneTeller.jpg'
+			image: 'https://imgur.com/65JgSjs.jpg'
 		},
 		alive: true,
 		charmed: false,
@@ -54,7 +54,7 @@ export const players1: Array<Player> = [
 			name: 'Villager',
 			team: 'Villagers',
 			description: 'Villagers are useless.',
-			image: './img/villager.jpg'
+			image: 'https://imgur.com/jmUN6iN.jpg'
 		},
 		alive: true,
 		charmed: false,
