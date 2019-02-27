@@ -28,27 +28,31 @@ class GamePlay extends Component<Props> {
 	render() {
 		const { morning } = this.props
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
+			<div className={morning ? 'app' : 'app--night'} >
 				<MainHeader inverted={!morning} />
 				<div className='main-content' >
-					<FlexBox justify='start' align='start' >
-						<FlexBox direction='column' align='start'>
+					<FlexBox direction='column' align='start' className='title-header' >
 							<Header inverted={!morning} as='h1' >
 								{this._phaseFromBool(morning)}
 							</Header>
-							<FlexBox direction='row' >
-								<Button primary onClick={this._togglePhase} inverted={!morning}
-									style={{ backgroundColor: morning ? '' : '#fafafa', color: morning ? '' : '#313131' }} >
-									{`Go to ${this._phaseFromBool(!morning)}`}
-								</Button>
-								<Button as={Link} to='/graveyard' inverted={!morning} >
-									Graveyard
-								</Button>
-							</FlexBox>
+						<FlexBox direction='row' >
+							<Button
+								primary
+								onClick={this._togglePhase}
+								inverted={!morning}
+								className={morning ? '' : 'button--dark'}
+							>
+								{`Go to ${this._phaseFromBool(!morning)}`}
+							</Button>
+							<Button as={Link} to='/graveyard' inverted={!morning} >
+								Graveyard
+							</Button>
 						</FlexBox>
+						<Divider className='title-header__divider' />
 					</FlexBox>
-					<Divider />
+					<div>
 						<PlayerList />
+					</div>
 				</div>
 			</div>
 		)

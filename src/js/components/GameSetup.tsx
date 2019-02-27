@@ -3,46 +3,40 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Header, Divider, Button } from 'semantic-ui-react'
 
+import FlexBox from './custom/FlexBox'
 import PlayerList from './PlayerList'
 import MainHeader from './MainHeader'
 
-import { RootState } from '../reducers'
-
-type Props = {
-	morning: boolean
-}
-
-class GameSetup extends Component<Props> {
+class GameSetup extends Component {
 	render() {
-		const { morning } = this.props
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
-				<MainHeader inverted={!morning} />
+			<div className='app' >
+				<MainHeader />
 				<div className='main-content' >
-					<div>
-						<Header as='h1' inverted={!morning} >
+					<FlexBox direction='column' align='start' className='title-header' >
+						<Header as='h1' >
 							Select Roles
 						</Header>
-						<Button primary as={Link} to='/gameplay' inverted={!morning} >
-							Confirm
-						</Button>
-						<Button as={Link} to={'/addPlayer'} inverted={!morning} >
-							Add Player
-						</Button>
-						<Button disabled inverted={!morning} >
-							Randomize
-						</Button>
-						<Divider />
+						<FlexBox direction='row' >
+							<Button primary as={Link} to='/gameplay' >
+								Confirm
+							</Button>
+							<Button as={Link} to={'/addPlayer'} >
+								Add Player
+							</Button>
+							<Button disabled >
+								Randomize
+							</Button>
+						</FlexBox>
+						<Divider className='title-header__divider' />
+					</FlexBox>
+					<div>
+						<PlayerList />
 					</div>
-					<PlayerList />
 				</div>
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state: RootState) => ({
-	morning: state.gameState.morning
-})
-
-export default connect(mapStateToProps, null)(GameSetup)
+export default connect(null, null)(GameSetup)

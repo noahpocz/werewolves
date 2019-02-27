@@ -46,6 +46,7 @@ type Props = {
 	paddingTop?: 'small' | 'medium' | 'large' | number
 	paddingBottom?: 'small' | 'medium' | 'large' | number
 	full?: boolean | 'vertical' | 'horizontal'
+	className?: string
 	style?: object
 }
 
@@ -60,7 +61,7 @@ class FlexBox extends Component<Props> {
 		const { direction, justify, align, wrap,
 			margin, marginLeft, marginRight, marginTop, marginBottom,
 			padding, paddingLeft, paddingRight, paddingTop, paddingBottom,
-			full, style, ...other } = this.props
+			full, className, style, ...other } = this.props
 
 		/* FULL */
 		const fullObj: any = {}
@@ -101,7 +102,7 @@ class FlexBox extends Component<Props> {
 		Object.keys(finalStyling).forEach(key => finalStyling[key] === undefined || finalStyling[key] === '' && delete finalStyling[key])
 
 		return (
-			<div style={finalStyling} {...other} >
+			<div style={finalStyling} {...other} className={className} >
 				{this.props.children}
 			</div>
 		)

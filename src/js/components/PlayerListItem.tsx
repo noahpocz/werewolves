@@ -62,9 +62,7 @@ class PlayerListItem extends Component<Props> {
 
 		const sheriffBadge = player.sheriff ? <Icon name='star' size='large' /> : undefined
 		return (
-			<Segment inverted={inverted} style={{ backgroundColor: inverted ? '#424242' : '',
-				boxShadow: inverted ? '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)' : '',
-				border: '1px solid rgba(34,36,38,.15)' }} color={player.charmed ? 'purple' : undefined} >
+			<Segment inverted={inverted} className={inverted ? 'segment--night' : 'segment'} color={player.charmed ? 'purple' : undefined} >
 				<FlexBox direction='row' align='center' justify='between' >
 					<FlexBox direction='row' align='center' justify='between' >
 						<FlexBox marginRight='small' >
@@ -74,7 +72,7 @@ class PlayerListItem extends Component<Props> {
 					</FlexBox>
 					<FlexBox direction='row' align='center' justify='between' >
 						{label}
-						<Dropdown icon={icon} >
+						<Dropdown direction='left' icon={icon} >
 							<Dropdown.Menu>
 								{menuItems}
 							</Dropdown.Menu>

@@ -1,13 +1,15 @@
 import { UPDATE_PLAYERS } from '../actions'
 import { Players } from '../model/player'
 
+import { players1 } from '../components/mockdata'
+
 export type PlayerState = {
 	players: Players
 	deadPlayers: Players
 }
 
 const initialState: PlayerState = {
-	players: [],
+	players: players1,
 	deadPlayers: []
 }
 
