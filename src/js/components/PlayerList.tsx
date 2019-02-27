@@ -227,7 +227,7 @@ class PlayerList extends Component<Props> {
 							menuItems = []
 					}
 					return (
-						<PlayerListItem player={player} key={i} index={i} menuItems={menuItems} inverted={!morning} />
+						<PlayerListItem player={player} key={i} index={i} menuItems={menuItems} inverted={!morning && gameState === 'gameplay'} />
 					)
 				}
 				return null

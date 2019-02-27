@@ -1,12 +1,26 @@
-@import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
-
-.app {
-	min-height: 100vh;
-	background-color: #FAFAFA;
-	overflow-y: hidden;
-}
-
-.main-content {
-	margin: 12px 48px 48px;
-	padding: 12px 48px 48px;
+.werewolves.spooky.dog {
+	.app {
+		min-height: 100vh;
+		background-color: #FAFAFA;
+	}
+	
+	.app--night {
+		@extend .app;
+		background-color: #313131;
+	}
+	
+	.segment {
+		border: 1px solid rgba(34,36,38,.15);
+	}
+	
+	.segment--night {
+		@extend .segment;
+		background-color: #424242;
+		box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12);
+	}
+	
+	.main-content {
+		margin: 12px 48px 48px;
+		padding: 12px 48px 48px;
+	}
 }

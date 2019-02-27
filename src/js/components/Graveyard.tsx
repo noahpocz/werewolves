@@ -19,7 +19,7 @@ class Graveyard extends Component<Props> {
 	render() {
 		const { morning } = this.props
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
+			<div className={morning ? 'app' : 'app--night'} >
 				<MainHeader inverted={!morning} />
 				<div className='main-content' >
 					<FlexBox justify='start' align='start' >
