@@ -19,23 +19,29 @@ class Graveyard extends Component<Props> {
 	render() {
 		const { morning } = this.props
 		return (
-			<div style={{ height: window.innerHeight, backgroundColor: morning ? '#FAFAFA' : '#313131' }} >
+			<div className={morning ? 'app' : 'app--night'} >
 				<MainHeader inverted={!morning} />
 				<div className='main-content' >
-					<FlexBox justify='start' align='start' >
-						<FlexBox direction='column' align='start'>
-							<Header inverted={!morning} as='h1' >
-								Graveyard
-							</Header>
-							<FlexBox direction='row' >
-								<Button primary as={Link} to='/gameplay' inverted={!morning} >
-									Go Back
-								</Button>
-							</FlexBox>
+					<FlexBox direction='column' align='start' className='title-header' >
+						<Header inverted={!morning} as='h1' >
+							Graveyard
+						</Header>
+						<FlexBox direction='row' >
+							<Button
+								primary
+								as={Link}
+								to='/gameplay'
+								inverted={!morning}
+								className={morning ? '' : 'button--dark'}
+							>
+								Go Back
+							</Button>
 						</FlexBox>
+						<Divider className='title-header__divider' />
 					</FlexBox>
-					<Divider />
+					<div>
 						<PlayerList />
+					</div>
 				</div>
 			</div>
 		)

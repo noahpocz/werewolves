@@ -11,7 +11,7 @@ type Props = {
 class App extends Component<Props> {
 	render() {
 		return (
-			<div>
+			<div className='werewolves spooky dog' >
 				<Switch>
 					{this.props.children}
 				</Switch>
