@@ -72,7 +72,7 @@ class PlayerListItem extends Component<Props> {
 					</FlexBox>
 					<FlexBox direction='row' align='center' justify='between' >
 						{label}
-						<Dropdown icon={icon} >
+						<Dropdown direction='left' icon={icon} >
 							<Dropdown.Menu>
 								{menuItems}
 							</Dropdown.Menu>

@@ -1,6 +1,11 @@
+$mobile: 767px;
+$border-color: #d9d9d9;
+$border: 1px solid $border-color;
+
 .werewolves.spooky.dog {
 	.app {
 		min-height: 100vh;
+		height: 100%;
 		background-color: #FAFAFA;
 	}
 	
@@ -11,16 +16,73 @@
 	
 	.segment {
 		border: 1px solid rgba(34,36,38,.15);
+		@media only screen and (max-width: $mobile) {
+			margin: 0px;
+			background-color: inherit;
+			border-radius: 0px;
+			border: none;
+			border-bottom: $border;
+			// First Child
+			&:nth-child(1) {
+				border-top: $border;
+			}
+			box-shadow: none;
+		}
 	}
-	
+
+	.segment.landing-page {
+		@media only screen and (max-width: $mobile) {
+			background-color: #1b1c1d;
+		}
+	}
+
 	.segment--night {
 		@extend .segment;
 		background-color: #424242;
 		box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12);
+		@media only screen and (max-width: $mobile) {
+			margin: 0px;
+			background-color: inherit;
+			border-radius: 0px;
+			border: none;
+			border-bottom: $border;
+			// First Child
+			&:nth-child(1) {
+				border-top: $border;
+				border-color: #505050;
+			}
+			border-color: #505050;
+			box-shadow: none;
+		}
+	}
+
+	.title-header {
+		@media only screen and (max-width: $mobile) {
+			margin: 1rem;
+			.ui.divider.title-header__divider {
+				display: none;
+			}
+		}
+	}
+
+	.message {
+		width: 50%;
+		@media only screen and (max-width: $mobile) {
+			width: 100%;
+		}
+	}
+
+	.ui.primary.button--dark {
+		background-color: #fafafa;
+		color: #313131;
 	}
 	
 	.main-content {
 		margin: 12px 48px 48px;
 		padding: 12px 48px 48px;
+		@media only screen and (max-width: $mobile) {
+			margin: 12px 0 48px;
+			padding: 12px 0 48px;
+		}
 	}
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { Header, Input, Button } from 'semantic-ui-react'
+import { Header, Input, Button, Message } from 'semantic-ui-react'
 import FlexBox from './custom/FlexBox'
 
 import MainHeader from './MainHeader'
@@ -26,6 +26,7 @@ type Props = {
 type State = {
 	name: string
 	email: string
+	error: string
 }
 
 class AddPlayer extends Component<Props, State> {
@@ -34,7 +35,8 @@ class AddPlayer extends Component<Props, State> {
 
 		this.state = {
 			name: '',
-			email: ''
+			email: '',
+			error: ''
 		}
 	}
 
@@ -42,6 +44,10 @@ class AddPlayer extends Component<Props, State> {
 		const { players, updatePlayers, history } = this.props
 		const { name, email } = this.state
 		const newPlayers = [...players]
+		if (newPlayers.some(p => p.name === name)) {
+			this.setState({ error: 'That name is taken!' })
+			return
+		}
 		const newUser: Player = {
 			name: name.trim(),
 			email: email.trim(),
@@ -63,10 +69,22 @@ class AddPlayer extends Component<Props, State> {
 	}
 
 	render() {
+		const { error } = this.state
+		const errorMessage = () => {
+			if (false) return null
+			return (
+				<FlexBox align='center' margin='medium' >
+					<Message negative className='message' >
+						<Message.Header>{error}</Message.Header>
+					</Message>
+				</FlexBox>
+			)
+		}
 		return (
 			<div>
 				<MainHeader />
 				<div className='main-content' >
+					{errorMessage()}
 					<FlexBox direction='row' justify='center'>
 						<FlexBox direction='column' style={{ width: '270px' }}>
 							<FlexBox direction='row' justify='start' style={{ width: '100%' }}>

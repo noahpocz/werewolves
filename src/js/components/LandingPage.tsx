@@ -1,26 +1,13 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Header, Button, Icon, Segment } from 'semantic-ui-react'
 
 import FlexBox from './custom/FlexBox'
 
-import * as actions from '../actions'
-
-type Props = {
-	// Redux Action Creators
-	initializePlayers: typeof actions.initializePlayers
-}
-
-class LandingPage extends Component<Props> {
-
-	componentDidMount() {
-		this.props.initializePlayers()
-	}
-
+class LandingPage extends Component {
 	render() {
 		return (
-			<Segment inverted textAlign='center' vertical
+			<Segment className='landing-page' inverted textAlign='center' vertical
 				style={{ height: window.innerHeight, padding: '1em 0em' }} >
 				<FlexBox full justify='center' align='center' >
 					<Header
@@ -50,8 +37,4 @@ class LandingPage extends Component<Props> {
 	}
 }
 
-const actionCreators = {
-	initializePlayers: actions.initializePlayers,
-}
-
-export default connect(null, actionCreators)(LandingPage)
+export default LandingPage
