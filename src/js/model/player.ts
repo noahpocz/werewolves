@@ -4,6 +4,7 @@ export type Role = {
 	description: string
 	image: string
 	count?: number
+	maxCount?: number | string
 }
 
 export type Player = {
@@ -29,7 +30,8 @@ export const roles: Array<Role> = [
 		name: 'Villager',
 		team: 'Villagers',
 		description: 'Villagers are useless.',
-		image: 'https://imgur.com/jmUN6iN.jpg'
+		image: 'https://imgur.com/jmUN6iN.jpg',
+		maxCount: '∞'
 	},
 	{
 		name: 'Defender',
@@ -83,13 +85,15 @@ export const roles: Array<Role> = [
 		name: 'Two Sisters',
 		team: 'Villagers',
 		description: 'There are two of them.',
-		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg',
+		maxCount: 2
 	},
 	{
 		name: 'Three Brothers',
 		team: 'Villagers',
 		description: 'There are three of them.',
-		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg'
+		image: 'https://cdn.myminifactory.com/assets/object-assets/5971a8bd270db/images/720X720-beto-thingiverse.jpg',
+		maxCount: 3
 	},
 	{
 		name: 'Scapegoat',

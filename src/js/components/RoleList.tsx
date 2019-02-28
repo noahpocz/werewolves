@@ -13,10 +13,8 @@ import { RootState } from '../reducers'
 
 type Props = {
 	players: Players
-	deadPlayers: Players
 	history: any
 	location: any
-	morning: boolean
 	match: any
 	updatePlayers: typeof actions.updatePlayers
 }
@@ -27,6 +25,12 @@ type State = {
 
 type Count = {
 	count: number
+}
+
+const werewolvesMaxCount = (playerCount: number) => {
+	if (playerCount < 12) return 2
+	if (playerCount < 18) return 3
+	return 4
 }
 
 class RoleList extends Component<Props, State> {
@@ -73,7 +77,8 @@ class RoleList extends Component<Props, State> {
 		})
 		const renderRoles = () => {
 			return filteredRoles.map((role, i) => {
-				let cardColor: any = ''
+				let cardColor: any = undefined
+				let buttonLabel = 'Assign'
 				let labelColor: any = ''
 				switch (role.team) {
 					case 'Werewolves':
@@ -89,16 +94,28 @@ class RoleList extends Component<Props, State> {
 						labelColor = undefined
 						break
 				}
-				const teamLabel =
+				const teamLabel = (
 					<Label style={{ marginTop: '6px' }} color={labelColor} >
 						{role.team}
 					</Label>
+				)
+				let selected = false
 				if (players[index].role) {
-					cardColor = role.name === players[index].role!.name ? 'blue' : undefined
+					selected = role.name === players[index].role!.name
 				}
+				if (selected) {
+					cardColor = 'blue'
+					buttonLabel = 'Already Assigned'
+				}
+				const roleMaxCount = role.team === 'Werewolves' ? werewolvesMaxCount(players.length) : role.maxCount || 1
+				const countLabel = (
+					<Label style={{ padding: '6px', textAlign: 'right', color: role.count! > roleMaxCount ? 'red' : '' }} corner='right'>
+						{role.count}/{roleMaxCount}
+					</Label>
+				)
 				return (
 					<Card key={i} color={cardColor} >
-						<Image src={role.image} label={<Label style={{ padding: '6px', textAlign: 'right' }} corner='right' >{role.count}/1</Label>} />
+						<Image src={role.image} label={countLabel} />
 						<Card.Content>
 							<Card.Header>
 								{role.name}
@@ -111,7 +128,7 @@ class RoleList extends Component<Props, State> {
 							</Card.Description>
 						</Card.Content>
 						<Card.Content extra>
-							<Button fluid primary basic onClick={() => this._assignRole(role, players)} >Assign</Button>
+							<Button fluid primary basic={!selected} onClick={() => this._assignRole(role, players)} >{buttonLabel}</Button>
 						</Card.Content>
 					</Card>
 				)
@@ -119,27 +136,29 @@ class RoleList extends Component<Props, State> {
 		}
 
 		return (
-			<div>
+			<div className='app' >
 				<MainHeader />
 				<div className='main-content' >
-					<div>
+					<FlexBox direction='column' align='start' className='title-header' >
 						<Header as='h1' >
 							Assign Role
 							<Header.Subheader>
 								<b>{players.length > 0 ? `${players[index].name}: ${currentRole}` : ''}</b>
 							</Header.Subheader>
 						</Header>
-						<FlexBox direction='row' justify='between' >
+						<FlexBox full='horizontal' direction='row' justify='between' >
 							<FlexBox direction='row' >
 								<Button primary >Randomize</Button>
 								<Button as={Link} to='/gameSetup' >Cancel</Button>
 							</FlexBox>
-							<Search placeholder='Search'
+							<Search
+								placeholder='Search'
 								onSearchChange={e => this._onSearchChange(e)}
-								showNoResults={false} />
+								showNoResults={false}
+							/>
 						</FlexBox>
-						<Divider />
-					</div>
+						<Divider className='title-header__divider' />
+					</FlexBox>
 					<Card.Group itemsPerRow={4} stackable >
 						{renderRoles()}
 					</Card.Group>
@@ -152,5 +171,8 @@ class RoleList extends Component<Props, State> {
 const mapStateToProps = (state: RootState) => ({
 	players: state.players.players
 })
+const actionCreators = {
+	updatePlayers: actions.updatePlayers
+}
 
-export default connect(mapStateToProps, actions)(RoleList)
+export default connect(mapStateToProps, actionCreators)(RoleList)

@@ -1,14 +1,15 @@
 import React, { Component, ReactElement } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { Divider, Dropdown, Header } from 'semantic-ui-react'
+import { Divider, Dropdown, Header, Button, Icon } from 'semantic-ui-react'
 
 import PlayerListItem from './PlayerListItem'
 
-import { Players, Player } from '../model/player'
+import { Players } from '../model/player'
 
 import * as actions from '../actions'
 import { RootState } from '../reducers'
+import FlexBox from './custom/FlexBox'
 
 type Props = {
 	// Redux State
@@ -22,16 +23,29 @@ type Props = {
 	match: any
 }
 
+const getGameState = (match: any) => {
+	let gameState = ''
+	if (match.url.includes('gameSetup')) {
+		gameState = 'gameSetup'
+	} else if (match.url.includes('gameplay')) {
+		gameState = 'gameplay'
+	} else if (match.url.includes('graveyard')) {
+		gameState = 'graveyard'
+	}
+	return gameState
+}
+
 class PlayerList extends Component<Props> {
 
 	_moveUp = (name: string) => {
-		const { updatePlayers, players } = this.props
+		const { updatePlayers, players, match } = this.props
+		const gameState = getGameState(match)
 		const updatedPlayers = [...players]
 		const index = updatedPlayers.findIndex(player => player.name === name)
 		let aboveIsDead = true
 		let aboveIndex = index - 1
 		while (aboveIsDead) {
-			if (updatedPlayers[aboveIndex].alive) {
+			if (updatedPlayers[aboveIndex].alive || gameState !== 'gameplay') {
 				aboveIsDead = false
 			} else {
 				aboveIndex -= 1
@@ -44,13 +58,14 @@ class PlayerList extends Component<Props> {
 	}
 
 	_moveDown = (name: string) => {
-		const { updatePlayers, players } = this.props
+		const { updatePlayers, players, match } = this.props
+		const gameState = getGameState(match)
 		const updatedPlayers = [...players]
 		const index = updatedPlayers.findIndex(player => player.name === name)
 		let belowIsDead = true
 		let belowIndex = index + 1
 		while (belowIsDead) {
-			if (updatedPlayers[belowIndex].alive) {
+			if (updatedPlayers[belowIndex].alive || gameState !== 'gameplay') {
 				belowIsDead = false
 			} else {
 				belowIndex += 1
@@ -128,116 +143,139 @@ class PlayerList extends Component<Props> {
 	}
 
 	render() {
-		const { players, morning, match } = this.props
-		let gameState = ''
-		if (match.url.includes('gameSetup')) {
-			gameState = 'gameSetup'
-		} else if (match.url.includes('gameplay')) {
-			gameState = 'gameplay'
-		} else if (match.url.includes('graveyard')) {
-			gameState = 'graveyard'
-		}
-		const renderPlayers = () => {
-			if (players.length === 0) {
-				return (
+		const { morning, match } = this.props
+		let { players } = this.props
+		const gameState = getGameState(match)
+		// If no players exist on master list
+		if (players.length === 0) {
+			return (
+				<FlexBox full align='center' justify='center' >
 					<Header inverted={!morning} as='h3' >
-						No players to show.
+						No players to show
 					</Header>
-				)
+					<Button as={Link} to={'/addPlayer'} primary animated>
+						<Button.Content visible>Add Player</Button.Content>
+						<Button.Content hidden>
+						<Icon name='add' />
+						</Button.Content>
+					</Button>
+				</FlexBox>
+			)
+		}
+		// Decide which subset of players to render
+		players = players.filter((player) => {
+			switch (gameState) {
+				case 'gameSetup':
+					return true
+				case 'gameplay':
+					return player.alive
+				case 'graveyard':
+					return !player.alive
+				default:
+					return true
 			}
+		})
+		// Render message if no players to render
+		if (players.length === 0) {
+			let message = ''
+			switch (gameState) {
+				case 'gameplay':
+					message = 'No players are alive'
+					break
+				case 'graveyard':
+					message = 'No players are dead'
+					break
+				default:
+					message = 'No players to show'
+			}
+			return (
+				<FlexBox full align='center' justify='center' >
+					<Header inverted={!morning} as='h3' >
+						{message}
+					</Header>
+				</FlexBox>
+			)
+		}
+
+		const renderPlayers = () => {
 			return players.map((player, i, players) => {
-				let renderCondition = true
+				/* Menu Items */
+				const assignRole = <Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
+				const moveUp = i !== 0 ?
+					<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : undefined
+				const moveDown = i !== players.length - 1 ?
+					<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : undefined
+				const deletePlayer = <Dropdown.Item onClick={() => this._deletePlayer(player.name)} style={{ color: 'red' }} >Delete</Dropdown.Item>
+				const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>
+				const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>
+				const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>
+				const makeSheriff = (
+					<Dropdown.Item onClick={() => this._makeSheriff(player.name)} >{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}</Dropdown.Item>
+				)
+				const makeLover = <Dropdown.Item>Make Lover</Dropdown.Item>
+				const markForDeath = <Dropdown.Item>Mark for Death</Dropdown.Item>
+				const markForLife = <Dropdown.Item>Mark for Life</Dropdown.Item>
+				const divider = <Divider />
+				let menuItems: Array<ReactElement | undefined> = []
 				switch (gameState) {
 					case 'gameSetup':
-						renderCondition = true
+						menuItems = [
+							assignRole,
+							divider,
+							moveUp,
+							moveDown,
+							divider,
+							deletePlayer
+						]
 						break
 					case 'gameplay':
-						renderCondition = player.alive
-						break
-					case 'graveyard':
-						renderCondition = !player.alive
-						break
-					default:
-						renderCondition = true
-				}
-				if (renderCondition) {
-					const assignRole = <Dropdown.Item as={Link} to={`/roleList/${i}`} >Assign Role</Dropdown.Item>
-					const moveUp = i !== 0 ?
-						<Dropdown.Item onClick={() => this._moveUp(player.name)} >Move Up</Dropdown.Item> : undefined
-					const moveDown = i !== players.length - 1 ?
-						<Dropdown.Item onClick={() => this._moveDown(player.name)} >Move Down</Dropdown.Item> : undefined
-					const deletePlayer = <Dropdown.Item onClick={() => this._deletePlayer(player.name)} style={{ color: 'red' }}  >Delete</Dropdown.Item>
-					const killPlayer = <Dropdown.Item onClick={() => this._killPlayer(player.name)} >Kill</Dropdown.Item>
-					const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>
-					const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>
-					const makeSheriff = (
-						<Dropdown.Item onClick={() => this._makeSheriff(player.name)} >{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}</Dropdown.Item>
-					)
-					const makeLover = <Dropdown.Item>Make Lover</Dropdown.Item>
-					const markForDeath = <Dropdown.Item>Mark for Death</Dropdown.Item>
-					const markForLife = <Dropdown.Item>Mark for Life</Dropdown.Item>
-					const divider = <Divider />
-					let menuItems: Array<ReactElement | undefined> = []
-					switch (gameState) {
-						case 'gameSetup':
+						if (morning) {
 							menuItems = [
-								assignRole,
+								killPlayer,
+								charmPlayer,
+								divider,
+								makeSheriff,
+								makeLover,
 								divider,
 								moveUp,
-								moveDown,
-								divider,
-								deletePlayer
+								moveDown
 							]
-							break
-						case 'gameplay':
-							if (morning) {
-								menuItems = [
-									killPlayer,
-									charmPlayer,
-									divider,
-									makeSheriff,
-									makeLover,
-									divider,
-									moveUp,
-									moveDown
-								]
-							} else {
-								menuItems = [
-									markForDeath,
-									markForLife,
-									divider,
-									killPlayer,
-									charmPlayer,
-									divider,
-									makeSheriff,
-									makeLover,
-									divider,
-									moveUp,
-									moveDown
-								]
-							}
-							break
-						case 'graveyard':
+						} else {
 							menuItems = [
-								revivePlayer,
-								charmPlayer
+								markForDeath,
+								markForLife,
+								divider,
+								killPlayer,
+								charmPlayer,
+								divider,
+								makeSheriff,
+								makeLover,
+								divider,
+								moveUp,
+								moveDown
 							]
-							break
-						default:
-							menuItems = []
-					}
-					return (
-						<PlayerListItem
-							player={player}
-							key={i} index={i}
-							menuItems={menuItems}
-							inverted={!morning && (gameState === 'gameplay' || gameState === 'graveyard')}
-						/>
-					)
+						}
+						break
+					case 'graveyard':
+						menuItems = [
+							revivePlayer,
+							charmPlayer
+						]
+						break
+					default:
+						menuItems = []
 				}
-				return null
+				return (
+					<PlayerListItem
+						player={player}
+						key={i} index={i}
+						menuItems={menuItems}
+						inverted={!morning && (gameState === 'gameplay' || gameState === 'graveyard')}
+					/>
+				)
 			})
 		}
+
 		return (
 			<React.Fragment>
 				{renderPlayers()}
