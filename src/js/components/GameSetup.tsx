@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { Header, Divider, Button } from 'semantic-ui-react'
+import { Header, Divider, Button, Icon } from 'semantic-ui-react'
 
 import FlexBox from './custom/FlexBox'
 import PlayerList from './PlayerList'
@@ -21,8 +21,11 @@ class GameSetup extends Component {
 							<Button primary as={Link} to='/gameplay' >
 								Confirm
 							</Button>
-							<Button as={Link} to={'/addPlayer'} >
-								Add Player
+							<Button as={Link} to={'/addPlayer'} animated>
+								<Button.Content visible>Add Player</Button.Content>
+								<Button.Content hidden>
+								<Icon name='add' />
+								</Button.Content>
 							</Button>
 							<Button disabled >
 								Randomize
