@@ -150,7 +150,7 @@ class PlayerList extends Component<Props> {
 		if (players.length === 0) {
 			return (
 				<FlexBox full align='center' justify='center' >
-					<Header inverted={!morning} as='h3' >
+					<Header inverted={!morning && (gameState === 'gameplay' || gameState === 'graveyard')} as='h3' >
 						No players to show
 					</Header>
 					<Button as={Link} to={'/addPlayer'} primary animated>
@@ -219,14 +219,22 @@ class PlayerList extends Component<Props> {
 				let menuItems: Array<ReactElement | undefined> = []
 				switch (gameState) {
 					case 'gameSetup':
-						menuItems = [
-							assignRole,
-							divider,
-							moveUp,
-							moveDown,
-							divider,
-							deletePlayer
-						]
+						if (moveUp || moveDown) {
+							menuItems = [
+								assignRole,
+								divider,
+								moveUp,
+								moveDown,
+								divider,
+								deletePlayer
+							]
+						} else {
+							menuItems = [
+								assignRole,
+								divider,
+								deletePlayer
+							]
+						}
 						break
 					case 'gameplay':
 						if (morning) {
