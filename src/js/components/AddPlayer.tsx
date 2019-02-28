@@ -71,7 +71,7 @@ class AddPlayer extends Component<Props, State> {
 	render() {
 		const { error } = this.state
 		const errorMessage = () => {
-			if (false) return null
+			if (!error) return null
 			return (
 				<FlexBox align='center' margin='medium' >
 					<Message negative className='message' >
