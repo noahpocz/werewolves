@@ -8,6 +8,8 @@ import { Players, Player } from '../model/player'
 import * as actions from '../actions'
 import { RootState } from '../reducers'
 
+const ICON_CLASS_ROOT = 'material-icons'
+
 type Props = {
 	player: Player
 	index: number
@@ -31,7 +33,10 @@ class PlayerListItem extends Component<Props> {
 
 	render() {
 		const { player, index, menuItems, inverted, unassignable } = this.props
-		const icon = <Icon name='ellipsis vertical' size='large' />
+		// const icon = <Icon name='ellipsis vertical' size='large' />
+
+		const iconClass = inverted ? `${ICON_CLASS_ROOT} ${ICON_CLASS_ROOT}--dark` : ICON_CLASS_ROOT
+		const icon = <i className={iconClass} >more_vert</i>
 		let labelColor: any = ''
 		if (player.role) {
 			switch (player.role.team) {

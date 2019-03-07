@@ -1,2 +1,20 @@
+.material-icons {
+	cursor: pointer;
+	color: #727272;
+	user-select: none;
+	transition: all ease-in-out .25s;
+	&:hover {
+		color: #212121;
+	}
+}
+
+.material-icons--dark {
+	@extend .material-icons;
+	color: #FAFAFA;
+	&:hover {
+		color: #FFFFFF;
+	}
+}
+
 @import './App';
 @import './MainHeader';

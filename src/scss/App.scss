@@ -89,4 +89,8 @@ $border: 1px solid $border-color;
 			padding: 12px 0 48px;
 		}
 	}
+
+	.ui.dropdown {
+		display: flex;
+	}
 }
