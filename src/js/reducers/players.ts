@@ -1,7 +1,7 @@
 import { UPDATE_PLAYERS } from '../actions'
 import { Players } from '../model/player'
 
-import { players1 } from '../components/mockdata'
+import { players1 } from './mockdata'
 
 export type PlayerState = {
 	players: Players

@@ -1,5 +1,5 @@
 export * from './gameState'
-export * from  './players'
+export * from './players'
 
 /* ACTION TYPES */
 export const UPDATE_PLAYERS = 'UPDATE_PLAYERS'

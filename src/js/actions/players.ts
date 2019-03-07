@@ -1,4 +1,3 @@
-import { players1 } from '../components/mockdata'
 import { Action, ActionCreator } from 'redux'
 // import { ThunkAction } from 'redux-thunk'
 import { UPDATE_PLAYERS } from '.'
