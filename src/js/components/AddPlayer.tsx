@@ -55,6 +55,8 @@ class AddPlayer extends Component<Props, State> {
 			charmed: false,
 			alive: true,
 			sheriff: false,
+			markedForDeath: false,
+			markedForLife: false,
 			lover: false
 		}
 

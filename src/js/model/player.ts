@@ -1,4 +1,6 @@
-export type Role = {
+export type Role = BaseRole | Elder
+
+export interface BaseRole {
 	name: string
 	team: string
 	description: string
@@ -7,12 +9,18 @@ export type Role = {
 	maxCount?: number | string
 }
 
+export interface Elder extends BaseRole {
+	extraLife?: boolean
+}
+
 export type Player = {
 	name: string
 	alive: boolean
 	charmed: boolean
 	sheriff: boolean
 	lover: boolean
+	markedForDeath: boolean
+	markedForLife: boolean
 	role?: Role
 	email?: string
 }
@@ -55,7 +63,8 @@ export const roles: Array<Role> = [
 		name: 'Elder',
 		team: 'Villagers',
 		description: 'The elder has fallen and can\'t get up.',
-		image: 'https://imgur.com/0FdYO2a.jpg'
+		image: 'https://imgur.com/0FdYO2a.jpg',
+		extraLife: true
 	},
 	{
 		name: 'Fox',
