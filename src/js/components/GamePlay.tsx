@@ -8,7 +8,7 @@ import FlexBox from './custom/FlexBox'
 import MainHeader from './MainHeader'
 import PlayerList from './PlayerList'
 
-import { Players } from '../model/player'
+import { Players, Elder, Role } from '../model/player'
 
 import * as actions from '../actions'
 import { RootState } from '../reducers'
@@ -22,6 +22,13 @@ type Props = {
 	togglePhase: typeof actions.togglePhase
 }
 
+const isElder = (role: Role | undefined): role is Elder => {
+	if (!role) {
+		return false
+	}
+	return (role as any).extraLife !== undefined
+}
+
 class GamePlay extends Component<Props> {
 
 	_phaseFromBool = (b: boolean) => {
@@ -29,19 +36,31 @@ class GamePlay extends Component<Props> {
 	}
 
 	_togglePhase = () => {
-		const { morning } = this.props
+		const { morning, togglePhase } = this.props
 		if (morning) {
-			this.props.togglePhase()
+			togglePhase()
 			return
 		}
-		this._endNight()
+		this._performNightActions()
+		this._unmarkPlayers()
+		togglePhase()
 	}
 
-	_endNight = () => {
+	_performNightActions = () => {
+		const { players } = this.props
 		// Create list of players marked for death
+		const markedPlayers = players.filter(p => p.markedForDeath)
 		// Call _killPlayer on each unless marked for life
-		// Unmark all for death/life
-		this.props.togglePhase()
+		markedPlayers.forEach((player) => {
+			// If marked for life do nothing
+			if (player.markedForLife) return
+			if (isElder(player.role) && player.role.extraLife) {
+				this._removeElderLife(player.name)
+				return
+			}
+			this._killPlayer(player.name)
+		})
+
 	}
 
 	/* Move player from players to deadPlayers */
@@ -51,6 +70,25 @@ class GamePlay extends Component<Props> {
 		const index = updatedPlayers.findIndex(player => player.name === name)
 		updatedPlayers[index].alive = false
 		updatedPlayers[index].sheriff = false
+		updatePlayers(updatedPlayers)
+	}
+
+	/* Remove the extra life of the Elder */
+	_removeElderLife = (name: string) => {
+		const { updatePlayers, players } = this.props
+		const updatedPlayers = [...players]
+		const index = updatedPlayers.findIndex(player => player.name === name);
+		(updatedPlayers[index].role as Elder).extraLife = false
+		updatePlayers(updatedPlayers)
+	}
+
+	_unmarkPlayers = () => {
+		const { updatePlayers, players } = this.props
+		const updatedPlayers = players.map((p) => {
+			p.markedForDeath = false
+			p.markedForLife = false
+			return p
+		})
 		updatePlayers(updatedPlayers)
 	}
 
@@ -69,7 +107,6 @@ class GamePlay extends Component<Props> {
 								primary
 								onClick={this._togglePhase}
 								inverted={!morning}
-								className={morning ? '' : 'button--dark'}
 							>
 								{`Go to ${this._phaseFromBool(!morning)}`}
 							</Button>

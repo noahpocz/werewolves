@@ -1,7 +1,8 @@
 import React, { Component, ReactElement } from 'react'
 import { connect } from 'react-redux'
 import { Link, withRouter } from 'react-router-dom'
-import { Divider, Dropdown, Header, Button, Icon } from 'semantic-ui-react'
+import { Divider, Dropdown, Header, Button } from 'semantic-ui-react'
+import Icon from './custom/MaterialIcon'
 
 import PlayerListItem from './PlayerListItem'
 
@@ -126,6 +127,24 @@ class PlayerList extends Component<Props> {
 		updatePlayers(updatedPlayers)
 	}
 
+	/* Marks or unmarks player for death */
+	_markforDeath = (name: string) => {
+		const { updatePlayers, players } = this.props
+		const updatedPlayers = [...players]
+		const index = updatedPlayers.findIndex(player => player.name === name)
+		updatedPlayers[index].markedForDeath = !updatedPlayers[index].markedForDeath
+		updatePlayers(updatedPlayers)
+	}
+
+	/* Marks or unmarks player for life */
+	_markforLife = (name: string) => {
+		const { updatePlayers, players } = this.props
+		const updatedPlayers = [...players]
+		const index = updatedPlayers.findIndex(player => player.name === name)
+		updatedPlayers[index].markedForLife = !updatedPlayers[index].markedForLife
+		updatePlayers(updatedPlayers)
+	}
+
 	_makeLover = (name: string) => {
 		const { updatePlayers, players } = this.props
 		const updatedPlayers = [...players]
@@ -197,6 +216,10 @@ class PlayerList extends Component<Props> {
 			)
 		}
 
+		const sheriffBadge = <Icon name='stars' />
+		const markedForDeath = <Icon name='thumb_down' />
+		const markedForLife = <Icon name='thumb_up' />
+
 		const renderPlayers = () => {
 			return players.map((player, i, players) => {
 				/* Menu Items */
@@ -210,11 +233,21 @@ class PlayerList extends Component<Props> {
 				const revivePlayer = <Dropdown.Item onClick={() => this._revivePlayer(player.name)} >Revive</Dropdown.Item>
 				const charmPlayer = <Dropdown.Item onClick={() => this._charmPlayer(player.name)} >{player.charmed ? 'Uncharm' : 'Charm'}</Dropdown.Item>
 				const makeSheriff = (
-					<Dropdown.Item onClick={() => this._makeSheriff(player.name)} >{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}</Dropdown.Item>
+					<Dropdown.Item onClick={() => this._makeSheriff(player.name)} >
+						{player.sheriff ? 'Remove Sheriff' : 'Make Sheriff'}
+					</Dropdown.Item>
 				)
 				const makeLover = <Dropdown.Item>Make Lover</Dropdown.Item>
-				const markForDeath = <Dropdown.Item>Mark for Death</Dropdown.Item>
-				const markForLife = <Dropdown.Item>Mark for Life</Dropdown.Item>
+				const markForDeath = (
+					<Dropdown.Item onClick={() => this._markforDeath(player.name)} >
+						{player.markedForDeath ? 'Unmark for Death' : 'Mark for Death'}
+					</Dropdown.Item>
+				)
+				const markForLife = (
+					<Dropdown.Item onClick={() => this._markforLife(player.name)} >
+						{player.markedForLife ? 'Unmark for Life' : 'Mark for Life'}
+					</Dropdown.Item>
+				)
 				const divider = <Divider />
 				let menuItems: Array<ReactElement | undefined> = []
 				switch (gameState) {

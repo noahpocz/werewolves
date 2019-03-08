@@ -12,6 +12,8 @@ export const players1: Array<Player> = [
 		alive: true,
 		charmed: false,
 		sheriff: false,
+		markedForDeath: false,
+		markedForLife: false,
 		lover: false
 	},
 	{
@@ -20,6 +22,8 @@ export const players1: Array<Player> = [
 		alive: true,
 		charmed: false,
 		sheriff: false,
+		markedForDeath: false,
+		markedForLife: false,
 		lover: false
 	},
 	{
@@ -33,6 +37,8 @@ export const players1: Array<Player> = [
 		alive: true,
 		charmed: false,
 		sheriff: false,
+		markedForDeath: false,
+		markedForLife: false,
 		lover: false
 	},
 	{
@@ -46,6 +52,8 @@ export const players1: Array<Player> = [
 		alive: true,
 		charmed: false,
 		sheriff: false,
+		markedForDeath: false,
+		markedForLife: false,
 		lover: false
 	},
 	{
@@ -59,6 +67,8 @@ export const players1: Array<Player> = [
 		alive: true,
 		charmed: false,
 		sheriff: false,
+		markedForDeath: false,
+		markedForLife: false,
 		lover: false
 	},
 ]
