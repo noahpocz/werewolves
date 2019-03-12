@@ -8,7 +8,7 @@ import FlexBox from './custom/FlexBox'
 import MainHeader from './MainHeader'
 import PlayerList from './PlayerList'
 
-import { Players, Elder, Role } from '../model/player'
+import { Players, Elder, elderHasExtraLife } from '../model/player'
 
 import * as actions from '../actions'
 import { RootState } from '../reducers'
@@ -20,13 +20,6 @@ type Props = {
 	// Redux Action Creators
 	updatePlayers: typeof actions.updatePlayers
 	togglePhase: typeof actions.togglePhase
-}
-
-const isElder = (role: Role | undefined): role is Elder => {
-	if (!role) {
-		return false
-	}
-	return (role as any).extraLife !== undefined
 }
 
 class GamePlay extends Component<Props> {
@@ -54,7 +47,7 @@ class GamePlay extends Component<Props> {
 		markedPlayers.forEach((player) => {
 			// If marked for life do nothing
 			if (player.markedForLife) return
-			if (isElder(player.role) && player.role.extraLife) {
+			if (elderHasExtraLife(player.role)) {
 				this._removeElderLife(player.name)
 				return
 			}

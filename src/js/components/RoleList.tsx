@@ -148,7 +148,7 @@ class RoleList extends Component<Props, State> {
 						</Header>
 						<FlexBox full='horizontal' direction='row' justify='between' >
 							<FlexBox direction='row' >
-								<Button primary >Randomize</Button>
+								<Button primary disabled >Randomize</Button>
 								<Button as={Link} to='/gameSetup' >Cancel</Button>
 							</FlexBox>
 							<Search

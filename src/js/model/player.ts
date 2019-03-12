@@ -27,6 +27,17 @@ export type Player = {
 
 export type Players = Array<Player>
 
+export const isElder = (role: Role | undefined): role is Elder => {
+	if (!role) {
+		return false
+	}
+	return (role as any).extraLife !== undefined
+}
+
+export const elderHasExtraLife = (role: Role | undefined) => {
+	return isElder(role) && role.extraLife
+}
+
 export const roles: Array<Role> = [
 	{
 		name: 'Werewolf',
